@@ -1,0 +1,120 @@
+.decompte {
+    position: absolute;
+    background-color: rgba(241,238,229, .8);
+    border: 1px solid grey;
+    border-radius: 20px;
+    padding: 15px;
+    text-align: center;
+    margin-bottom: 50px;
+    top: 15px;
+    z-index: 20;
+}
+.decompte h4 {
+    font-size: 25px;
+    font-weight: 300; 
+}
+.numbers {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.numbers .bloc {
+    display: inline-block;
+    width: 110px;
+    height: 110px;
+    background-color: rgba(255,255,255, .4);
+    border: 1px solid grey;
+    border-radius: 5px;
+    margin: 10px;
+    font-size: 20px;
+    font-weight: 200;   
+}
+
+.numbers .bloc strong {
+    display: block;
+    font-size: 50px;
+    font-weight: 900;
+}
+
+@media (max-width: 1133px){
+
+    .decompte {
+        position: absolute;
+        background-color: rgba(241,238,229, .8);
+        border: 1px solid grey;
+        border-radius: 0px;
+        padding: 15px;
+        text-align: center;
+        margin-bottom: 50px;
+        padding-bottom: 0px;
+        top: 30px;
+        z-index: 20;
+    }
+    .decompte h4 {
+        font-size: 20px;
+        font-weight: 300; 
+    }
+    .numbers {
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+    }
+    
+    .numbers .bloc {
+        display: inline-block;
+        width: 70px;
+        height: 70px;
+        background-color: rgba(255,255,255, .4);
+        border: 1px solid grey;
+        border-radius: 5px;
+        margin: 10px;
+        font-size: 15px;
+        font-weight: 200;   
+    }
+    
+    .numbers .bloc strong {
+        font-size: 30px;
+        font-weight: 900;
+    }
+}
+
+@media (max-width: 767px){
+
+    .decompte {
+        position: absolute;
+        background-color: rgba(241,238,229, .8);
+        border: 1px solid grey;
+        border-radius: 0px;
+        padding: 15px;
+        text-align: center;
+        margin-bottom: 70px;
+        top: 70px;
+        z-index: 20;
+    }
+    .decompte h4 {
+        font-size: 18px;
+        font-weight: 300; 
+    }
+    .numbers {
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+    }
+    
+    .numbers .bloc {
+        display: inline;
+        background-color: rgba(255,255,255, 0);
+        border: none;
+        border-radius: 0px;
+        margin: 5px;
+        font-size: 10px;
+        font-weight: 200;   
+    }
+    
+    .numbers .bloc strong {
+        display: inline;
+        font-size: 20px;
+        font-weight: 900;
+    }
+}

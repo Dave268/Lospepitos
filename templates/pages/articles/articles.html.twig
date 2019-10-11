@@ -1,0 +1,193 @@
+{# pages/articles/articles.html.twig #}
+
+{% extends "core/layout.html.twig" %}
+{% block title %}
+    {{ parent() }} - Notre Projet Ecolo
+{% endblock %}
+
+{% block head %}{% endblock %}
+
+{% block body %}
+<style>
+.marker {
+  background-image: url('{{ asset('assets/img/mapbox-icon.png') }}');
+  background-size: cover;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+.mapboxgl-popup {
+  max-width: 200px;
+  z-index: 1000;
+}
+
+.mapboxgl-popup-content {
+  text-align: center;
+  font-family: 'Open Sans', sans-serif;
+  font-size: 11px;
+}
+
+
+
+</style>
+
+<div class="row" style="padding-top: 10px;">
+{% if category == 1 %}
+        <div class="col-lg-12" style="padding-top: 0px;">
+            <h1 class="text-center title-page" style="font-weight: 500;font-style: italic;font-family: 'Cedarville Cursive', cursive;color: rgb(0,29,58);">Notre Projet Ecolo</h1>
+            <h3 class="text-center" style="font-weight: 500;font-style: italic;color: rgb(123,123,123);font-family: 'Cedarville Cursive', cursive;margin-bottom: 0px;">- Nos actions &amp; les initiatives locales -</h3>
+            <hr style="margin-top: 25px;">
+        </div>
+    </div>
+    {% elseif category == 2 %}
+        <div class="col-lg-12" style="padding-top: 20px;">
+            <h1 class="text-center title-page" style="font-weight: 500;font-style: italic;font-family: 'Cedarville Cursive', cursive;color: rgb(0,29,58);">Journal de Voyage</h1>
+            <h3 class="text-center" style="font-weight: 500;font-style: italic;color: rgb(123,123,123);font-family: 'Cedarville Cursive', cursive;margin-bottom: 0px;">- Itinéraire, impressions, flip-flops, trucs et astuces -</h3>
+            <hr style="margin-top: 25px;">
+        </div>
+    </div>
+    {% endif %}
+    <article class="text-justify"  style="padding-right: 30px; padding-left: 30px;">
+        <div class="row">
+            <div class="col-md-12 col-lg-4 offset-lg-1">
+                <div class="border rounded text-justify profile-card" style=" background-color: rgb(241,238,229);width: 100%;padding: 20px; margin-top: 20px;">
+                {{ text.content|raw }}
+                </div>
+                    <!--<p style="font-size:12px">Aventureux dans l’âme, nous avons la bougeotte  et nous nous intéressons à la permaculture, à l’écologie et à la protection de la faune et de la flore. Au travers de notre voyage, nous souhaitons recenser des initiatives et actions écologiques locales pour nous en enrichir et voir comment l’écologie est vue, ressentie et assimilée dans les différentes cultures. La place du cycliste et du vélo sera attentivement examinée.</p>
+                    
+                    <p style="font-size:12px">Nous souhaitons contribuer aux initiatives locales de manière bénévole et mener nos propres actions. Exemple: organiser une collecte de plastique et de déchets. L’objectif, c’est de mettre la main à la pâte et d’inciter les gens, vous également, à prendre conscience de ce tournant et à changer nos habitudes de consommateurs. C’est facile, il suffit de comprendre que c’est possible… et se donner les moyens d’y arriver.</p>
+                    
+                    <p style="font-size:12px">Il s’agit aussi d’avoir un fil conducteur qui nous permettra de ne pas trop nous éparpiller durant notre voyage et rencontrer les locaux autour de la thématique de l’écologie. Nous sommes conscients que nous nous situons à un tournant au niveau climatique. Nous en  sommes persuadés depuis septembre 2018, suite à la vision du film documentaire “On a 20 ans pour changer le monde” (<a href="https://fermesdavenir.org/fermes-davenir/pole-influence/film-on-a-20-ans-pour-changer-le-monde">lien</a>).</p>
+                    <p style="font-weight:bold; font-size:12px">Cela étant, tout voyage entraîne une pollution. Nous tenterons de la prévenir, de la réduire au minimum en récupérant, recyclant et refusant certaines choses qui nous serons sans doute offertes (ex: pailles en plastique). Nous privilégions une approche de réutilisation plutôt que la surconsommation. </p>-->  
+            <!--<article class="text-justify"  style="padding-right: 30px; padding-left: 30px;">
+            <div class="row">
+                <div class="col-md-12 col-lg-4 offset-lg-1">
+                <div class="border rounded text-justify profile-card" style=" background-color: rgb(241,238,229);width: 100%;padding: 20px; margin-top: 20px;">
+                <p style="font-size:12px">Il s’agit d’abord de vivre l’aventure d’une vie, en quittant notre confort quotidien, et en partant à l’aventure, sac à dos sur le dos.</p>
+                    <p style="font-size:12px">Nous partons pour nous épanouir, découvrir de nouveaux paysages et de nouvelles cultures, rencontrer les populations locales et les backpackers et savourer d’autres mets culinaires. On adore bien manger!</p>
+                    <div class="row" style="margin-bottom: 20px;">
+                    <div class="col-12 col-md-8 offset-md-2">
+                        <div class="border rounded text-center profile-card" style="background-color: rgb(241,238,229);width: 100%;padding: 20px;">
+                                <h4><strong><i class="fas fa-globe-americas"></i>  Tour du monde: carte d’identité  <i class="fas fa-globe-americas"></i></strong><br></h4></br>
+                                <div class="row" style="margin: 0;margin-right: 0;padding-bottom: -5px;/*height: 30px;*/">
+                                    <div class="col-12 col-md-6 float-left" style="padding: 10px;padding-top: 5px;padding-bottom: 0;"><span class="text-left float-left" style="font-family: Montserrat, sans-serif;font-weight: bold;font-size: 14px;"><strong>Destinations premières:</strong><br></span></div>
+                                    <div class="col-12 col-md-6" style="padding: 10px;padding-top: 5px;padding-bottom: 0;">
+                                        <p class="text-justify" style="font-family: Montserrat, sans-serif;font-size: 13px;">Amérique centrale en commençant par le Mexique/Guatemala<br></p>
+                                    </div>
+                                </div>
+                                <div class="row" style="margin: 0;margin-right: 0;padding-bottom: -5px;/*height: 30px;*/">
+                                    <div class="col-12 col-md-6 float-left" style="padding: 10px;padding-top: 5px;padding-bottom: 0;"><span class="text-left float-left" style="font-family: Montserrat, sans-serif;font-weight: bold;font-size: 14px;"><strong>Date de départ:</strong><br></span></div>
+                                    <div class="col-12 col-md-6" style="padding: 10px;padding-top: 5px;padding-bottom: 0;">
+                                        <p class="text-justify" style="font-family: Montserrat, sans-serif;font-size: 13px;">Le dimanche 6 octobre 2019<br></p>
+                                    </div>
+                                </div>
+                                <div class="row" style="margin: 0;margin-right: 0;padding-bottom: -5px;/*height: 30px;*/">
+                                    <div class="col-12 col-md-6 float-left" style="padding: 10px;padding-top: 5px;padding-bottom: 0;"><span class="text-left float-left" style="font-family: Montserrat, sans-serif;font-weight: bold;font-size: 14px;"><strong>Moyens de transport:</strong><br></span></div>
+                                    <div class="col-12 col-md-6" style="padding: 10px;padding-top: 5px;padding-bottom: 0;">
+                                        <p class="text-justify" style="font-family: Montserrat, sans-serif;font-size: 13px;">La marche, le vélo, le stop, la plongée et l’avion<br></p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <p style="font-size:12px">On réfléchit déjà à nous installer définitivement quelque part pour ouvrir une chambre d’hôtes ou un centre de plongée (avec bien sûr une ONG/projet écolo).</p>
+                    <p style="font-size:12px"> Nous publierons sur cette page des articles relatifs à notre itinéraire, nos impressions, nos échanges, rencontres, les + et les flip-flops du voyage, nos anecdotes, nos trucs et astuces, etc</p></div>-->
+
+                    
+		    </div>
+            <div class="col-12 col-lg-6">
+                <div class="row article-row">
+                    <div class="col-12">
+                        <div id='map' style='width: 100%; height: 300px;margin-bottom: 20px; margin-top: 20px;'></div>
+                    </div>
+                </div>
+                        {% for  article in listArticles %}
+                <div class="row article-row" style="margin: 0px;">
+                    <div class="col-12 col-sm-4 col-md-3 col-lg-2 col-article-img"><img class="float-left article-img" src="{{ asset(article.url) }}"></div>
+                    <div class="col-12 col-sm-8 col-md-9 col-lg-10 news-bg" style="padding: 15px 10px;">
+                        <h1 class="newsblock-title-under" style="/*font-family: Raleway, sans-serif;*/"><a href="{{ path('article_view', {id: article.id}) }}">{{ article.title }}</a></h1>
+                        <p class="text-justify">{{ article.short }}...<a href="{{ path('article_view', {id: article.id}) }}"><span>&nbsp;Lire la suite&nbsp;<i class="fa fa-chevron-right" style="color: rgba(33,37,41,0.5);"></i></span></a><span style="color:grey; float: right; font-style:italic;"> - posté le: {{ article.datepost|date("d/m/Y") }} - </span></p>
+                    </div>
+                </div>
+                {% endfor %}
+                <div class="row">
+                    <div class="col">
+                        <nav class="d-md-flex justify-content-md-center">
+                        {%if nbPages > 0 %}
+                            <ul class="pagination">
+                                <li class="page-item {% if page <= 1 %}disabled {% endif %}" ><a class="page-link" href="{{ path('articles', {'page': page-1}) }}" aria-label="Previous"><span aria-hidden="true">«</span></a></li>
+                                {% for p in range(1, nbPages) %}
+									<li class="page-item {% if p == page %}active{% endif %}">
+									  <a class="page-link" href="{{ path('articles', {'page': p}) }}">{{ p }}</a>
+									</li>
+								 {% endfor %}
+                                <li class="page-item {% if page >= nbPages %}disabled {% endif %}"><a class="page-link" href="{{ path('articles', {'page': page+1}) }}" aria-label="Next"><span aria-hidden="true">»</span></a></li>
+                            </ul>
+                            {% endif %}
+                        </nav>
+                    </div>
+                </div>
+            </div>
+		</div>
+    </article>
+
+    
+{% endblock %}
+
+{% block script %}
+<script>
+
+mapboxgl.accessToken = 'pk.eyJ1IjoiZGF2ZWRnb3ViIiwiYSI6ImNrMDU4Z3hrdTAyNXkzbHRmMG9idm9wZHYifQ.m4PPqSkZJt31QdHuyz5weA';
+
+var map = new mapboxgl.Map({
+  container: 'map',
+  style: 'mapbox://styles/mapbox/streets-v11',
+  center: [-88.802858, 19.845366],
+  zoom: 4
+});
+
+var geojson = {
+  type: 'FeatureCollection',
+  features: [
+      {% for  article in listArticles %}
+      {
+    type: 'Feature',
+    geometry: {
+      type: 'Point',
+      coordinates: [ {{ article.gps}}]
+    },
+    properties: {
+      title: '{{ article.title }}',
+      description: '<a href="{{ path('article_view', {id: article.id}) }}">Lire L\'article</a>'
+    }
+  },
+  {% endfor %}
+  ]
+};
+
+var bounds = new mapboxgl.LngLatBounds();
+ 
+geojson.features.forEach(function(marker) {
+
+  // create a HTML element for each feature
+  var el = document.createElement('div');
+  el.className = 'marker';
+
+  // make a marker for each feature and add to the map
+  new mapboxgl.Marker(el)   
+    .setLngLat(marker.geometry.coordinates)
+    .setPopup(new mapboxgl.Popup({ offset: 25 }) // add popups
+    .setHTML('<h6><strong>' + marker.properties.title + '<strong></h6><p style="font-size:11px">' + marker.properties.description + '</p>'))
+    .addTo(map);
+
+    bounds.extend(marker.geometry.coordinates);
+});
+
+map.fitBounds(bounds, { padding: 50 });
+
+
+</script>
+
+{% endblock %}

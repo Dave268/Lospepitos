@@ -1,0 +1,251 @@
+login:
+    path: /login
+    controller: App\Controller\SecurityController::login
+
+login_check:
+    path: /login_check
+
+logout:
+    path: /logout
+
+home:
+    path: /
+    controller: App\Controller\CoreController::home
+
+construction:
+    path: /construction
+    controller: App\Controller\CoreController::construction
+
+articles:
+    path: /articles/list/{category}/{page}
+    controller: App\Controller\ArticlesController::articles
+    defaults:
+        category: 1
+        page: 1
+    requirements:
+        page: '\d+'
+
+blog:
+    path: /blog/list/{category}/{page}
+    controller: App\Controller\ArticlesController::articles
+    defaults:
+        category: 2
+        page: 1
+    requirements:
+        page: '\d+'
+    
+article_view:
+    path: /articles/view/{id}
+    controller: App\Controller\ArticlesController::view
+    requirements:
+        id: '\d+'
+    
+about:
+    path: /about
+    controller: App\Controller\AboutController::about
+    
+contact:
+    path: /contact
+    controller: App\Controller\ContactController::contact
+
+gallery:
+    path: /gallery/{page}
+    controller: App\Controller\GalleryController::gallery
+    defaults:
+        page: 1
+
+gallery_view:
+    path: /gallery/view/{id}
+    controller: App\Controller\GalleryController::view
+    
+admin:
+    path: /admin
+    controller: App\Controller\AdminController::admin
+    
+admin_articles:
+    path: /admin/articles/{page}
+    controller: App\Controller\ArticlesController::adminArticles
+    defaults:
+        page: 1
+    requirements:
+        page: '\d+'
+    
+admin_article_view:
+    path: /admin/article/view/{id}
+    controller: App\Controller\ArticlesController::adminView
+    requirements:
+        id: '\d+'
+    
+admin_articles_add:
+    path: /admin/add-article
+    controller: App\Controller\ArticlesController::add
+    
+admin_articles_modify: 
+    path: /admin/modify-article/{id}
+    controller: App\Controller\ArticlesController::modify
+    requirements:
+        id: '\d+'
+    
+admin_articles_delete:
+    path: /admin/delete-article/{id}
+    controller: App\Controller\ArticlesController::delete
+    requirements:
+        id: '\d+'
+
+admin_articles_update:
+    path: /admin/article/update/{id}/{field}/{data}
+    controller: App\Controller\ArticlesController::updateArticle
+
+admin_gallery:
+    path: /admin/gallery/{page}
+    controller: App\Controller\GalleryController::adminGallery
+    defaults:
+        page: 1
+    requirements:
+        page: '\d+'
+    
+admin_gallery_view:
+    path: /admin/gallery/view/{id}
+    controller: App\Controller\GalleryController::adminView
+    requirements:
+        id: '\d+'
+    
+admin_gallery_add:
+    path: /admin/add-album
+    controller: App\Controller\GalleryController::add
+    
+admin_gallery_modify: 
+    path: /admin/modify-gallery/{id}
+    controller: App\Controller\GalleryController::modify
+    requirements:
+        id: '\d+'
+    
+admin_gallery_delete:
+    path: /admin/delete-gallery/{id}
+    controller: App\Controller\GalleryController::delete
+    requirements:
+        id: '\d+'
+
+admin_bestimage:
+    path: /admin/bestimage/{page}
+    controller: App\Controller\ImageController::adminImage
+    defaults:
+        page: 1
+    requirements:
+        page: '\d+'
+
+admin_bestimage_add:
+    path: /admin/bestimage/add
+    controller: App\Controller\ImageController::add
+    
+admin_bestimage_modify: 
+    path: /admin/bestimage/modify/{id}
+    controller: App\Controller\ImageController::modify
+    requirements:
+        id: '\d+'
+    
+admin_bestimage_delete:
+    path: /admin/bestimage/delete/{id}
+    controller: App\Controller\ImageController::delete
+    requirements:
+        id: '\d+'
+
+admin_content:
+    path: /admin/content/{page}
+    controller: App\Controller\ContentController::admin
+    defaults:
+        page: 1
+    requirements:
+        page: '\d+'
+
+admin_content_add:
+    path: /admin/content/add
+    controller: App\Controller\ContentController::add
+    
+admin_content_modify: 
+    path: /admin/content/modify/{id}
+    controller: App\Controller\ContentController::modify
+    requirements:
+        id: '\d+'
+    
+admin_content_delete:
+    path: /admin/content/delete/{id}
+    controller: App\Controller\ContentController::delete
+    requirements:
+        id: '\d+'
+
+admin_menu:
+    path: /admin/menu
+    controller: App\Controller\MenuController::adminMenu
+    defaults:
+        page: 1
+    requirements:
+        page: '\d+'
+
+admin_articles_continent_add:
+    path: /admin/article/continent/add
+    controller: App\Controller\MenuController::addContinent
+
+admin_articles_continent_modify: 
+    path: /admin/article/continent/modify/{id}
+    controller: App\Controller\MenuController::modifyContinent
+    requirements:
+        id: '\d+'
+
+admin_articles_continent_delete:
+    path: /admin/article/continent/delete/{id}
+    controller: App\Controller\MenuController::deleteContinent
+    requirements:
+        id: '\d+'
+    
+admin_articles_country_add:
+    path: /admin/article/country/add
+    controller: App\Controller\MenuController::addCountry
+
+admin_articles_country_modify: 
+    path: /admin/article/country/modify/{id}
+    controller: App\Controller\MenuController::modifyCountry
+    requirements:
+        id: '\d+'
+
+admin_articles_country_delete:
+    path: /admin/article/country/delete/{id}
+    controller: App\Controller\MenuController::deleteCountry
+    requirements:
+        id: '\d+'
+    
+admin_articles_category_add:
+    path: /admin/article/category/add
+    controller: App\Controller\MenuController::addCategory
+
+admin_articles_category_modify: 
+    path: /admin/article/category/modify/{id}
+    controller: App\Controller\MenuController::modifyCategory
+    requirements:
+        id: '\d+'
+
+admin_articles_category_delete:
+    path: /admin/article/category/delete/{id}
+    controller: App\Controller\MenuController::deleteCategory
+    requirements:
+        id: '\d+'
+
+admin_subcategory_add:
+    path: /admin/menu/subcategory/add
+    controller: App\Controller\MenuController::addSubcategory
+
+admin_subcategory_modify: 
+    path: /admin/menu/subcategory/modify/{id}
+    controller: App\Controller\MenuController::modifySubCategory
+    requirements:
+        id: '\d+'
+
+admin_subcategory_delete:
+    path: /admin/menu/category/delete/{id}
+    controller: App\Controller\MenuController::deleteSubcategory
+    requirements:
+        id: '\d+'
+        
+filemanager:
+    path: /admin/filemanager
+    controller: App\Controller\FlmngrController::index

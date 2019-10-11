@@ -1,0 +1,154 @@
+{# pages/home.html.twig #}
+
+{% extends "core/layout.html.twig" %}
+
+{% block title %}
+    {{ parent() }} - Accueil
+{% endblock %}
+
+{% block head %}
+<meta name="description"  content="Los Pepitos: Ceci est un blog de voyage ecolo. Trouvez des trucs et astuces ecolo et de voyage." />
+<meta name="keywords"  content="Los Pepitos, lospepitos, voyage, blog, ecolo, ecologique, blog de voyage" />
+{% endblock %}
+
+{% block body %}
+
+<style>
+.marker {
+  background-image: url('{{ asset('assets/img/mapbox-icon.png') }}');
+  background-size: cover;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+.markerTwo {
+  background-image: url('{{ asset('assets/img/mapbox-icon-green.png') }}');
+  background-size: cover;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+.mapboxgl-popup {
+  max-width: 200px;
+  z-index: 1000;
+}
+
+.mapboxgl-popup-content {
+  text-align: center;
+  font-family: 'Open Sans', sans-serif;
+  font-size: 11px;
+}
+
+
+
+</style>
+{% include "core/carousel.html.twig" %}
+    <article class="text-justify" style="padding-right: 50px; padding-left: 50px;">
+        <div class="row">
+            <div class="col-md-12 col-lg-4">
+                <div class="border rounded text-justify profile-card" style=" background-color: rgb(241,238,229);width: 100%;padding: 20px; height: 100%; margin-top: 20px;">
+                {{ text.content|raw }}
+                </div>
+			</div>
+            <div class="col-12 col-lg-8 col-list-art">
+                    <div id='map' style='width: 100%; min-height: 300px; height: 100%;margin-bottom: 20px;margin-top: 20px;'></div>
+            </div>
+        </div>
+    </article>
+{% endblock %}
+
+{% block script %}
+<script>
+
+mapboxgl.accessToken = 'pk.eyJ1IjoiZGF2ZWRnb3ViIiwiYSI6ImNrMDU4Z3hrdTAyNXkzbHRmMG9idm9wZHYifQ.m4PPqSkZJt31QdHuyz5weA';
+
+var map = new mapboxgl.Map({
+  container: 'map',
+  style: 'mapbox://styles/mapbox/streets-v11',
+  //center: [-96, 37.8],
+  zoom: 3
+});
+
+var geojson = {
+  type: 'FeatureCollection',
+  features: [
+  {% for article in listArticles %}
+      {
+    type: 'Feature',
+    geometry: {
+      type: 'Point',
+      coordinates: [ {{ article.gps}}]
+    },
+    properties: {
+      title: '{{ article.title }}',
+      description: '<a href="{{ path('article_view', {id: article.id}) }}">Lire L\'article</a>'
+    }
+  },
+  {% endfor %}
+  ]
+};
+
+var geojsonTwo = {
+  type: 'FeatureCollection',
+  features: [
+      {% for blog in listBlog %}
+      {
+    type: 'Feature',
+    geometry: {
+      type: 'Point',
+      coordinates: [ {{ blog.gps}}]
+    },
+    properties: {
+      title: '{{ blog.title }}',
+      description: '<a href="{{ path('article_view', {id: blog.id}) }}">Lire L\'article</a>',
+      iconSize: ['80px', '80px']
+    }
+  },
+  {% endfor %}
+  ]
+};
+
+var bounds = new mapboxgl.LngLatBounds();
+ 
+geojson.features.forEach(function(marker) {
+
+  // create a HTML element for each feature
+  var el = document.createElement('div');
+    el.className = 'marker';
+
+  // make a marker for each feature and add to the map
+  new mapboxgl.Marker(el)   
+    .setLngLat(marker.geometry.coordinates)
+    .setPopup(new mapboxgl.Popup({ offset: 25 }) // add popups
+    .setHTML('<h6><strong>' + marker.properties.title + '<strong></h6><p style="font-size:11px">' + marker.properties.description + '</p>'))
+    .addTo(map);
+
+    bounds.extend(marker.geometry.coordinates);
+});
+
+geojsonTwo.features.forEach(function(marker) {
+
+  // create a HTML element for each feature
+  var el = document.createElement('div');
+    el.className = 'markerTwo';
+
+  // make a marker for each feature and add to the map
+  new mapboxgl.Marker(el)   
+    .setLngLat(marker.geometry.coordinates)
+    .setPopup(new mapboxgl.Popup({ offset: 25 }) // add popups
+    .setHTML('<h6><strong>' + marker.properties.title + '<strong></h6><p style="font-size:11px">' + marker.properties.description + '</p>'))
+    .addTo(map);
+
+    bounds.extend(marker.geometry.coordinates);
+});
+
+map.fitBounds(bounds, { padding: 50 });
+
+
+
+</script>
+{% endblock %}

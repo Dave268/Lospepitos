@@ -1,0 +1,47 @@
+{# pages/articles/articles.html.twig #}
+
+{% extends "core/layout.html.twig" %}
+
+{% block title %}
+    {{ parent() }} - {{ article.title }}
+{% endblock %}
+
+{% block head %}{% endblock %}
+
+{% block body %}
+<style>
+
+td {
+    padding: 10px;
+    padding-right: 30px;
+    padding-top: 25px;
+}
+</style>
+<div class="row" style="padding-top: 100px;">
+        <div class="col" style="padding-top: 0px;">
+            <h1 class="text-center title-page" style="font-weight: 500;font-style: italic;font-family: 'Cedarville Cursive', cursive;color: rgb(0,29,58);">{{ article.title }}</h1>
+            <hr style="margin-top: 25px;">
+        </div>
+    </div>
+	<article>
+        <div class="row">
+            <div class="col-md-10 col-lg-8 mx-auto">
+			{{ article.text | raw }}
+			</div>
+		</div>
+	</article>
+{% endblock %}
+
+{% block script %}
+<script>
+        $('article img').each(function ()
+        {
+            var currentImage = $(this);
+            currentImage.css({"margin":"10px"});
+            currentImage.wrap("<a href='" + currentImage.attr("src") + "' data-toggle='lightbox'  data-gallery='example-gallery' ></a>");
+        });
+        $(document).on('click', '[data-toggle="lightbox"]', function(event) {
+                event.preventDefault();
+                $(this).ekkoLightbox();
+            });
+    </script>{% endblock %}

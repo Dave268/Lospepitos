@@ -1,0 +1,48 @@
+{# pages/articles/articles.html.twig #}
+
+{% extends "core/layout.html.twig" %}
+
+{% block head %}{% endblock %}
+
+{% block body %}
+<div class="row" style="padding-top: 10px;">
+        <div class="col" style="padding-top: 0px;">
+            <h1 class="text-center title-page" style="font-weight: 500;font-style: italic;font-family: 'Cedarville Cursive', cursive;color: rgb(0,29,58);">Ecologie</h1>
+            <h3 class="text-center" style="font-weight: 500;font-style: italic;color: rgb(123,123,123);font-family: 'Cedarville Cursive', cursive;margin-bottom: 0px;font-size: 35px;">- Nos actions &amp; les initiatives locales -</h3>
+            <hr style="margin-top: 25px;">
+        </div>
+    </div>
+<div style="width: 100%;">
+        <div class="container" style="width: 80%;max-width: 100%;">
+            <div class="row">
+                <div class="col-12">
+				{% for  article in listArticles %}
+                    <div class="row" style="height: 200px;max-height: 200px;">
+                        <div class="col news-bg" style="min-width: 550px;"><img class="float-left article-img" src="{{ asset(article.url) }}">
+                            <h1 class="newsblock-title-under">{{ article.title }}</h1>
+                            <p>{{ article.short }}</p><a href="{{ path('article_view', {id: article.id}) }}"><span>Lire la suite&nbsp;<i class="fa fa-chevron-right" style="color: rgba(33,37,41,0.5);"></i></span></a></div>
+                    </div>
+                    {% endfor %}
+				
+                    <div class="row article-row" style="padding-top: 10px;padding-bottom: 10px;">
+                        <div class="col">
+                            <nav aria-label="Page navigation example">
+                                <ul class="pagination justify-content-center">
+									<li class="page-item"><a class="page-link" href="{{ path('admin_articles', {'page': page-1}) }}" aria-label="Previous"><span aria-hidden="true">«</span></a></li>
+								{% for p in range(1, nbPages) %}
+									<li class="page-item {% if p == page %}active{% endif %}">
+									  <a class="page-link" href="{{ path('admin_articles', {'page': p}) }}">{{ p }}</a>
+									</li>
+								 {% endfor %}
+									<li class="page-item"><a class="page-link" href="{{ path('admin_articles', {'page': page+1}) }}" aria-label="Next"><span aria-hidden="true">»</span></a></li>
+                                </ul>
+                            </nav>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block script %}{% endblock %}

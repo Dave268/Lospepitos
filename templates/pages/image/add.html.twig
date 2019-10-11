@@ -1,0 +1,35 @@
+{# pages/admin/admin.html.twig #}
+
+{% extends "core/layoutadmin.html.twig" %}
+
+{% block head %}
+
+{% endblock %}
+
+{% block body %}
+<div class="row" style="padding-top: 70px;">
+        <div class="col" style="padding-top: 0px;">
+            <h1 class="text-center title-page" style="font-weight: 500;font-style: italic;font-family: 'Cedarville Cursive', cursive;color: rgb(0,29,58);">Ajouter une image</h1>
+            <hr style="margin-top: 25px;">
+        </div>
+    </div>
+    <div>
+        <div class="container" style="max-width: 100%;">
+            <div class="row">
+                <div class="col-md-10 col-lg-8 mx-auto">
+                    <!--<form class="bootstrap-form-with-validation">
+                        <h2 class="text-center">Nouvel Article</h2>
+                        <div class="form-group"><label for="text-input">Titre</label><input class="form-control" type="text" id="text-input" name="text-input"></div>
+                        <div class="form-group"><label for="textarea-input">Article</label><textarea class="form-control classy-editor1"></textarea></div>
+                        <div class="form-group"><button class="btn btn-info" type="submit" style="margin-right: 15px;">save</button><button class="btn btn-warning" type="submit" style="margin-right: 15px;">preview</button><button class="btn btn-success" type="submit" style="margin-right: 15px;">publish</button></div>
+                    </form>-->
+					{{ form(form) }}
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+{% endblock %}
+
+{% block script %}{% endblock %}

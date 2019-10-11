@@ -1,0 +1,101 @@
+{# pages/articles/articles.html.twig #}
+
+{% extends "core/layoutadmin.html.twig" %}
+
+{% block title %}
+    {{ parent() }} - Menus
+{% endblock %}
+
+{% block head %}{% endblock %}
+
+
+{% block body %}
+<div class="row" style="padding-top: 10px;">
+        <div class="col" style="padding-top: 0px;">
+            <h1 class="text-center title-page" style="font-weight: 500;font-style: italic;font-family: 'Cedarville Cursive', cursive;color: rgb(0,29,58);">Gestion Articles</h1>
+            <hr style="margin-top: 25px;">
+        </div>
+    </div>
+    <div>
+        <div class="container" style="width: 95%;max-width: 100%;margin-top:50px; margin-bottom:50px;">
+            <div class="row">
+                <div class="col-md-2 col-lg-2 sticky-top"><a href="{{ path('admin')}}"><h4><i class="fas fa-arrow-left"></i> Retour à la liste</h4></a></div>
+            </div>
+			<div class="container" style="padding-right: 50px; padding-left: 50px;">
+    <div class="row text-center text-lg-left">
+        <div class="col-12 col-sm-6 col-md-3 col-lg-2" style="">
+            <div class="gallery" style="padding: 15px;width: 100%;border-radius: 5px;"><h4 style="text-align:center;">Onglets</h4>
+            </div>
+            <div class="gallery" style="padding: 0px;width: 100%;border-radius: 5px;"><button onclick="window.location.href='{{ path('admin_articles_category_add') }}'" class="btn btn-light btn-lg addbutton" type="button" style="font-size: 15px;"><i class="fa fa-plus" style=""></i>&nbsp;Nouvelle Onglet</button>
+            </div>
+        </div>
+        {% for category in listCategory %}
+        <div class="col-12 col-sm-6 col-md-3 col-lg-2" style="">
+            <div class="gallery" style="padding: 15px;width: 100%;border-radius: 5px;"><h5 style="text-align:center;">{{ category.name }}</h5>
+                <div class="desc">
+                    <span class="icon"><a class="flag" href="{{ path('admin_articles_category_modify', {id: category.id}) }}">&nbsp;&nbsp;<i class="fa fa-pencil actionicon"></i></a><a class="flag" data-href="{{ path('admin_articles_category_delete', {id: category.id}) }}" data-toggle="modal" data-target="#confirm-delete">&nbsp;&nbsp;<i class="fa fa-trash-o actionicon"></i></a></span>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    <hr>
+    <div class="row text-center text-lg-left">
+        <div class="col-12 col-sm-6 col-md-3 col-lg-2" style="">
+            <div class="gallery" style="padding: 15px;width: 100%;border-radius: 5px;"><h4 style="text-align:center;">Sous-catégories</h4>
+            </div>
+            <div class="gallery" style="padding: 0px;width: 100%;border-radius: 5px;"><button onclick="window.location.href='{{ path('admin_subcategory_add') }}'" class="btn btn-light btn-lg addbutton" type="button" style="font-size: 15px;"><i class="fa fa-plus" style=""></i>&nbsp;Nouvelle sous-catégorie</button>
+            </div>
+        </div>
+        {% for category in listSubCategory %}
+        <div class="col-12 col-sm-6 col-md-3 col-lg-2" style="">
+            <div class="gallery" style="padding: 15px;width: 100%;border-radius: 5px; height: 100%;"><h5 style="text-align:center;">{{ category.name }}</h5>
+                <div class="desc">
+                    <span class="icon"><a class="flag" href="{{ path('admin_subcategory_modify', {id: category.id}) }}">&nbsp;&nbsp;<i class="fa fa-pencil actionicon"></i></a><a class="flag" data-href="{{ path('admin_subcategory_delete', {id: category.id}) }}" data-toggle="modal" data-target="#confirm-delete">&nbsp;&nbsp;<i class="fa fa-trash-o actionicon"></i></a></span>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    <hr>
+    <div class="row text-center text-lg-left">
+        <div class="col-12 col-sm-6 col-md-3 col-lg-2" style="">
+            <div class="gallery" style="padding: 15px;width: 100%;border-radius: 5px;"><h4 style="text-align:center;">Continents</h4>
+            </div>
+            <div class="gallery" style="padding: 0px;width: 100%;border-radius: 5px;"><button onclick="window.location.href='{{ path('admin_articles_continent_add') }}'" class="btn btn-light btn-lg addbutton" type="button" style="font-size: 15px;"><i class="fa fa-plus" style=""></i>&nbsp;Nouveau Continent</button>
+            </div>
+        </div>
+        {% for category in listContinent %}
+        <div class="col-12 col-sm-6 col-md-3 col-lg-2" style="">
+            <div class="gallery" style="padding: 15px;width: 100%;border-radius: 5px; height: 100%;"><h5 style="text-align:center;">{{ category.name }}</h5>
+                <div class="desc">
+                    <span class="icon"><a class="flag" href="{{ path('admin_articles_continent_modify', {id: category.id}) }}">&nbsp;&nbsp;<i class="fa fa-pencil actionicon"></i></a><a class="flag" data-href="{{ path('admin_articles_continent_delete', {id: category.id}) }}" data-toggle="modal" data-target="#confirm-delete">&nbsp;&nbsp;<i class="fa fa-trash-o actionicon"></i></a></span>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    <hr>
+    <div class="row text-center text-lg-left">
+        <div class="col-12 col-sm-6 col-md-3 col-lg-2" style="">
+            <div class="gallery" style="padding: 15px;width: 100%;border-radius: 5px;"><h4 style="text-align:center;">Pays</h4>
+            </div>
+            <div class="gallery" style="padding: 0px;width: 100%;border-radius: 5px;"><button onclick="window.location.href='{{ path('admin_articles_country_add') }}'" class="btn btn-light btn-lg addbutton" type="button" style="font-size: 15px;"><i class="fa fa-plus" style=""></i>&nbsp;Nouveau Pays</button>
+            </div>
+        </div>
+        {% for category in listCountry %}
+        <div class="col-12 col-sm-6 col-md-3 col-lg-2" style="">
+            <div class="gallery" style="padding: 15px;width: 100%;border-radius: 5px; height: 100%;"><h5 style="text-align:center;">{{ category.name }}</h5>
+                <div class="desc">
+                    <span class="icon"><a class="flag" href="{{ path('admin_articles_country_modify', {id: category.id}) }}">&nbsp;&nbsp;<i class="fa fa-pencil actionicon"></i></a><a class="flag" data-href="{{ path('admin_articles_country_delete', {id: category.id}) }}" data-toggle="modal" data-target="#confirm-delete">&nbsp;&nbsp;<i class="fa fa-trash-o actionicon"></i></a></span>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block script %}{% endblock %}

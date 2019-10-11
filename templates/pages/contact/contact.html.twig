@@ -1,0 +1,44 @@
+{# pages/contact/contact.html.twig #}
+
+{% extends "core/layout.html.twig" %}
+
+{% block title %}
+    {{ parent() }} - Contact
+{% endblock %}
+
+{% block head %}{% endblock %}
+
+{% block body %}
+<div class="row" style="padding-top: 10px;">
+        <div class="col" style="padding-top: 0px;">
+            <h1 class="text-center title-page" style="font-weight: 500;font-style: italic;font-family: 'Cedarville Cursive', cursive;color: rgb(0,29,58);">Contact</h1>
+            <hr style="margin-top: 25px;">
+        </div>
+    </div>
+    <div class="container" style="padding-top: 15px;">
+        <div class="row">
+            <div class="col-md-10 col-lg-8 mx-auto">
+                <p>Si vous souhaitez nous contacter, n'hésitez pas à remplir le formulaire ci-dessous. Nous vous répondrons dans les meilleurs délais, compte tenu de notre accès à internet.</p>
+    <p>Vous pouvez également consulter notre page <a href="https://www.facebook.com/LosPepitos.org/">facebook</a> et nous y laisser un message ou nous contacter par e-mail: <a href="mailto:tourdumonde@lospepitos.org">tourdumonde@lospepitos.org</a>.
+
+    Au plaisir de vous lire.</p>
+                <!--<form id="contactForm" name="sentMessage" novalidate="novalidate">
+                    <div class="control-group">
+                        <div class="form-group floating-label-form-group controls"><label>Name</label><input class="form-control" type="text" id="name" required="" placeholder="Name"><small class="form-text text-danger help-block"></small></div>
+                    </div>
+                    <div class="control-group">
+                        <div class="form-group floating-label-form-group controls"><label>Email Address</label><input class="form-control" type="email" id="email" required="" placeholder="Email Address"><small class="form-text text-danger help-block"></small></div>
+                    </div>
+                    <div class="control-group">
+                        <div class="form-group floating-label-form-group controls mb-3"><label>Message</label><textarea class="form-control" id="message" data-validation-required-message="Please enter a message." required="" placeholder="Message" rows="5"></textarea><small class="form-text text-danger help-block"></small></div>
+                    </div>
+                    <div id="success"></div>
+                    <div class="form-group"><button class="btn btn-primary" id="sendMessageButton" type="submit">Send</button></div>
+                </form>-->
+                {{ form(form) }}
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block script %}{% endblock %}

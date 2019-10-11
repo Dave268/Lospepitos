@@ -1,0 +1,35 @@
+{# pages/admin/admin.html.twig #}
+
+{% extends "core/layoutadmin.html.twig" %}
+
+{% block title %}
+    {{ parent() }} - Admin
+{% endblock %}
+
+{% block head %}{% endblock %}
+
+{% block body %}
+<div class="row" style="padding-top: 10px;">
+        <div class="col" style="padding-top: 0px;">
+            <h1 class="text-center title-page" style="font-weight: 500;font-style: italic;font-family: 'Cedarville Cursive', cursive;color: rgb(0,29,58);">Admin</h1>
+            <hr style="margin-top: 25px;">
+        </div>
+    </div>
+    <div>
+        <div class="container" style="width: 50%;max-width: 100%; margin-top:50px;">
+            <div class="row">
+                <div class="col-12">
+					<a href="{{ path('admin_menu') }}" class="btn btn-light addbutton" type="button" style="width: 100%;margin-bottom: 10px;">Gérer les menus/onglets</a>
+					<a href="{{ path('admin_articles') }}" class="btn btn-light addbutton" type="button" style="width: 100%;margin-bottom: 10px;">Gérer les articles</a>
+					<a href="{{ path('admin_gallery') }}" class="btn btn-light addbutton" type="button" style="width: 100%;margin-bottom: 10px;">Gérer les photos</a>
+					<a href="{{ path('admin_bestimage') }}" class="btn btn-light addbutton" type="button" style="width: 100%;margin-bottom: 10px;">Gérer Images Accueil</a>
+					<a href="{{ path('admin_content') }}" class="btn btn-light addbutton" type="button" style="width: 100%;margin-bottom: 10px;">Gérer le contenu</a>
+					<button class="btn btn-light addbutton" type="button" style="width: 100%;margin-bottom: 10px;" disabled>Changer mot de passe</button>
+				</div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
+
+{% block script %}{% endblock %}

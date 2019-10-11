@@ -1,0 +1,6 @@
+
+RewriteOptions inherit
+
+RewriteEngine on
+RewriteCond %{HTTP_HOST} ^.*$
+RewriteRule ^(.*)$ "http\:\/\/local\.lospepitos\.org\/$1" [R=301,L]

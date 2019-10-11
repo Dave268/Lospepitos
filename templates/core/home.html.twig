@@ -1,0 +1,97 @@
+{# pages/home.html.twig #}
+
+{% extends "core/layout.html.twig" %}
+
+{% block title %}
+    {{ parent() }} - Accueil
+{% endblock %}
+
+{% block head %}
+<meta name="description"  content="Los Pepitos: Ceci est un blog de voyage ecolo. Trouvez des trucs et astuces ecolo et de voyage." />
+<meta name="keywords"  content="Los Pepitos, lospepitos, voyage, blog, ecolo, ecologique, blog de voyage" />
+{% endblock %}
+
+{% block body %}
+<div class="row" style="padding-top: 10px;">
+        <div class="col" style="padding-top: 0px;">
+            <h1 class="text-center title-page" style="font-weight: 500;font-style: italic;font-family: 'Cedarville Cursive', cursive;color: rgb(0,29,58);">Los Pépitos</h1>
+            <h3 class="text-center" style="font-weight: 500;font-style: italic;color: rgb(123,123,123);font-family: 'Cedarville Cursive', cursive;margin-bottom: 0px;font-size: 35px; ">- Entre le Homard et l'Agame -</h3>
+            <hr style="margin-top: 25px;">
+        </div>
+    </div>
+    <div style="padding-left: 20px;padding-right: 20px;">
+        <div class="row">
+            <div class="col-12 col-md-6 col-lg-5 offset-lg-1 col-list-art" style"margin-bottom: 25px;">
+                <div class="row">
+                    <div class="col head-article-list">
+                        <h2>Notre Projet Ecolo...</h2>
+                    </div>
+                </div>
+                {% for  article in listArticles %}
+                <div class="row article-row">
+                    <div class="col-12 col-sm-4 col-md-4 col-lg-3 col-article-img"><img class="float-left article-img" src="{{ asset(article.url) }}"></div>
+                    <div class="col-12 col-sm-8 col-md-8 col-lg-9 news-bg" style="padding: 15px 10px;">
+                        <h1 class="newsblock-title-under" style="/*font-family: Raleway, sans-serif;*/"><a href="{{ path('article_view', {id: article.id}) }}">{{article.title}}</a></h1>
+                        <p class="text-justify">{{ article.short}}...<a href="{{ path('article_view', {id: article.id}) }}"><span>&nbsp;Lire la suite&nbsp;<i class="fa fa-chevron-right" style="color: rgba(33,37,41,0.5);"></i></span></a></p>
+                    </div>
+                </div>
+                {% endfor %}
+                <div class="row">
+                    <div class="col" style="padding-left: 0px;padding-top: 10px;padding-bottom: 10px;"><a class="text-left" href="{{ path('articles') }}" style="font-size: 15px;font-style: italic;">...Plus d'articles&nbsp;<i class="fa fa-chevron-right" style="color: rgba(33,37,41,0.5);font-size: 12px;"></i></a></div>
+                </div>
+            </div>
+            <div class="col-12 col-md-6 col-lg-5 offset-lg-1 col-list-art">
+                <div class="row">
+                    <div class="col head-article-list">
+                        <h2>Journal de Voyage...</h2>
+                    </div>
+                </div>
+                {% for  blog in listBlog %}
+                <div class="row article-row">
+                    <div class="col-12 col-sm-4 col-md-4 col-lg-3 col-article-img"><img class="float-left article-img" src="{{ asset(blog.url) }}"></div>
+                    <div class="col-12 col-sm-8 col-md-8 col-lg-9 news-bg" style="padding: 15px 10px;">
+                        <h1 class="newsblock-title-under" style="/*font-family: Raleway, sans-serif;*/"><a href="{{ path('blog_view', {id: blog.id}) }}">{{blog.title}}<a/></h1>
+                        <p class="text-justify">{{ blog.short}}...<a href="{{ path('blog_view', {id: blog.id}) }}"><span>&nbsp;Lire la suite&nbsp;<i class="fa fa-chevron-right" style="color: rgba(33,37,41,0.5);"></i></span></a></p>
+                    </div>
+                </div>
+                {% endfor %}
+                <div class="row">
+                    <div class="col" style="padding-left: 0px;padding-top: 10px;padding-bottom: 10px;"><a class="text-left" href="{{ path('blog') }}" style="font-size: 15px;font-style: italic;">...Vers le journal de voyage&nbsp;<i class="fa fa-chevron-right" style="color: rgba(33,37,41,0.5);font-size: 12px;"></i></a></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <hr>
+    <div style="padding-left: 20px;padding-right: 20px;">
+        <div class="row">
+            <div class="col-12 col-md-6 col-lg-5 offset-lg-1 col-list-art">
+                <div class="row">
+                    <div class="col">
+                        <h2 style="margin-bottom: 20px;font-weight: 500;">Photos</h2>
+                    </div>
+                </div>
+                <div class="row text-center text-lg-left">
+                <p> Aucune image publiée pour le moment, encore un peu de patience ;)<p>
+                    <!--<div class="col-12 col-sm-6 col-md-4 col-lg-3 col-xl-2"><a class="d-block mb-4 h-100" href="#"><img class="img-thumbnail img-fluid img-container" src="https://source.unsplash.com/pWkk7iiCoDM/400x300" alt=" "></a></div>
+                    <div class="col-12 col-sm-6 col-md-4 col-lg-3 col-xl-2"><a class="d-block mb-4 h-100" href="#"><img class="img-thumbnail img-fluid img-container" src="https://source.unsplash.com/aob0ukAYfuI/400x300" alt=" "></a></div>
+                    <div class="col-12 col-sm-6 col-md-4 col-lg-3 col-xl-2"><a class="d-block mb-4 h-100" href="#"><img class="img-thumbnail img-fluid img-container" src="https://source.unsplash.com/EUfxH-pze7s/400x300" alt=" "></a></div>
+                    <div class="col-12 col-sm-6 col-md-4 col-lg-3 col-xl-2"><a class="d-block mb-4 h-100" href="#"><img class="img-thumbnail img-fluid img-container" src="https://source.unsplash.com/M185_qYH8vg/400x300" alt=" "></a></div>
+                    <div class="col-12 col-sm-6 col-md-4 col-lg-3 col-xl-2"><a class="d-block mb-4 h-100" href="#"><img class="img-thumbnail img-fluid img-container" src="https://source.unsplash.com/sesveuG_rNo/400x300" alt=" "></a></div>
+                    <div class="col-12 col-sm-6 col-md-4 col-lg-3 col-xl-2"><a class="d-block mb-4 h-100" href="#"><img class="img-thumbnail img-fluid img-container" src="https://source.unsplash.com/aob0ukAYfuI/400x300" alt=" "></a></div>
+                    <div class="col-12 col-sm-6 col-md-4 col-lg-3 col-xl-2"><a class="d-block mb-4 h-100" href="#"><img class="img-thumbnail img-fluid img-container" src="https://source.unsplash.com/EUfxH-pze7s/400x300" alt=" "></a></div>
+                    <div class="col-12 col-sm-6 col-md-4 col-lg-3 col-xl-2"><a class="d-block mb-4 h-100" href="#"><img class="img-thumbnail img-fluid img-container" src="https://source.unsplash.com/M185_qYH8vg/400x300" alt=" "></a></div>
+                    <div class="col-12 col-sm-6 col-md-4 col-lg-3 col-xl-2"><a class="d-block mb-4 h-100" href="#"><img class="img-thumbnail img-fluid img-container" src="https://source.unsplash.com/sesveuG_rNo/400x300" alt=" "></a></div>
+                    <div class="col-12 col-sm-6 col-md-4 col-lg-3 col-xl-2"><a class="d-block mb-4 h-100" href="#"><img class="img-thumbnail img-fluid img-container" src="https://source.unsplash.com/AvhMzHwiE_0/400x300" alt=" "></a></div>
+                    <div class="col-12 col-sm-6 col-md-4 col-lg-3 col-xl-2"><a class="d-block mb-4 h-100" href="#"><img class="img-thumbnail img-fluid img-container" src="https://source.unsplash.com/2gYsZUmockw/400x300" alt=" "></a></div>
+                    <div class="col-12 col-sm-6 col-md-4 col-lg-3 col-xl-2"><a class="d-block mb-4 h-100" href="#"><img class="img-thumbnail img-fluid img-container" src="https://source.unsplash.com/EMSDtjVHdQ8/400x300" alt=" "></a></div>
+                    -->
+                </div>
+                <div class="row">
+                    <div class="col" style="padding-left: 0px;padding-top: 10px;padding-bottom: 10px;"><a class="text-left" href="{{ path('gallery') }}" style="font-size: 15px;font-style: italic;">...Vers la galerie&nbsp;<i class="fa fa-chevron-right" style="color: rgba(33,37,41,0.5);font-size: 12px;"></i></a></div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block script %}{% endblock %}

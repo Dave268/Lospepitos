@@ -1,0 +1,131 @@
+    <div class="modal fade" role="dialog" tabindex="-1" id="confirm-delete">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header" style="background-color:rgba(249,2,2,0);">
+                <h4 class="modal-title" style="text-align:center;"> <strong>SUPPRIMER??</strong></h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                    
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2"><i class="fa fa-warning" style="font-size:50px;color:rgba(255,6,6,0.61);"></i></div>
+                        <div class="col-lg-10 col-md-10 col-sm-10 col-xs-10">
+                            <p>Etes-vous certain de vouloir supprimer cette entrée?</p>
+                            <p>Cette action est <strong>irréversible!!!</strong></p>
+                            <p class="debug-url"></p>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-primary" type="button" data-dismiss="modal">Cancel </button>
+                    <a class="btn btn-danger btn-ok">Supprimer </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" role="dialog" tabindex="-1" id="confirm-send">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header" style="background-color:rgba(249,2,2,0);">
+                <h4 class="modal-title" style="text-align:center;"> <strong>Envoyer???</strong></h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                    </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2"><i class="glyphicon glyphicon-send" style="font-size:50px;color:rgba(6,61,255,0.61);"></i></div>
+                        <div class="col-lg-10 col-md-10 col-sm-10 col-xs-10">
+                            <p>Etes-vous certain de vouloir envoyer un nouveau mail?</p>
+                            <p><em>Cette action peut prendre plusieurs minutes!</em></p>
+							<p class="debug-url"></p>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-primary" type="button" data-dismiss="modal">Cancel </button>
+					<a class="btn btn-success btn-ok">Envoyer </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% if app.session.flashbag.has('success')%}
+        <div class="modal fade" role="dialog" tabindex="-1" id="modalDone" data-dismiss="modal">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header" style="background-color:rgba(249,2,2,0);">
+                        <h4 class="modal-title" style="text-align:center;"> <strong>Action Réalisé</strong></h4>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                        </div>
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2"><i class="glyphicon glyphicon-ok" style="font-size:50px;color:#01c638;"></i></div>
+                            <div class="col-lg-10 col-md-10 col-sm-10 col-xs-10">
+                                <p>Les actions suivantes ont bien été réalisé</p>
+                                <ul>
+                                    {% for message in app.session.flashbag.get('success') %}
+                                        <li>{{ message }}</li>
+                                    {% endfor %}
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn btn-info" type="button" style="width:97px;" data-dismiss="modal">Ok </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endif %}
+    {% if app.session.flashbag.has('ERROR') %}
+        <div class="modal fade" role="dialog" tabindex="-1" id="modalError">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header" style="background-color:rgba(249,2,2,0);">
+                    <h4 class="modal-title" style="text-align:center;"> <strong>ERREUR!!!!</strong></h4>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                        </div>
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2"><i class="glyphicon glyphicon-remove" style="font-size:50px;color:#fe0101;"></i></div>
+                            <div class="col-lg-10 col-md-10 col-sm-10 col-xs-10">
+                                <p>Les erreurs suivantes ce sont produites:</p>
+                                <ul>
+                                {% for message in app.session.flashbag.get('ERROR') %}
+                                        <li>{{ message }}</li>
+                                {% endfor %}
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn btn-warning" type="button" style="width:97px;" data-dismiss="modal">Ok </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+    {% endif %}
+    <div class="modal fade" role="dialog" tabindex="-1" id="modalDroits">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header" style="background-color:rgba(249,2,2,0);">
+                        <h4 class="modal-title" style="text-align:center;"> <strong>Droits d'auteurs</strong></h4>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                        </div>
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col-12 text-justify">
+                                <p>Tous les textes, photos et illustrations se trouvant sur ce site, ainsi que notre logo et notre nom, sont protégés par les droits d'auteur. Ceci vaut également pour la mise en page et la fonctionnalité de notre site internet.</p>
+
+                                <p>Les textes, photos et illustrations peuvent être reproduits pour un usage privé. Leur diffusion publique n'est admise en aucun cas sans notre autorisation expresse. Dans ce cas, la référence à notre site internet devra être explicitement mentionnée pour chaque diffusion.</p>
+
+                                <p>L'autorisation pour la reproduction et la diffusion vaut uniquement pour le matériel dont nous disposons du droit d'auteur. Si vous souhaitez reproduire du matériel dont le droit d'auteur appartient à des tiers, vous devez demander l'autorisation auprès du détenteur de ce droit.</p>
+                                
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn btn-warning" type="button" style="width:97px;" data-dismiss="modal">Ok </button>
+                    </div>
+                </div>
+            </div>
+        </div>
