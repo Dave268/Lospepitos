@@ -17,10 +17,12 @@ construction:
     controller: App\Controller\CoreController::construction
 
 articles:
-    path: /articles/list/{category}/{page}
+    path: /articles/list/{category}/{type}/{sub}/{page}
     controller: App\Controller\ArticlesController::articles
     defaults:
         category: 1
+        type: 'pays'
+        sub: 'all'
         page: 1
     requirements:
         page: '\d+'

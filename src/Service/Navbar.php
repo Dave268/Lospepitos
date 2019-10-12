@@ -32,7 +32,7 @@ class Navbar
         $content .= '<li class="nav-item" role="presentation"><a class="nav-link {% if app.request.get(\'_route\') == \'about\' %}active{% endif %}" href="{{ path(\'about\') }}"><i class="far fa-smile-beam" style="font-size: 17px"></i>&nbsp; Nous</a></li>';
 
         foreach ($categories as $a)
-        {
+        {   
             $content .= '<li class="nav-item dropdown">';
             $content .= '<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">' . $a->getFont() . '&nbsp; ' . $a->getName() . '</a>';
             $content .= '<div class="dropdown-menu" aria-labelledby="navbarDropdown">';
@@ -41,7 +41,7 @@ class Navbar
             $tempSub = false;
             foreach ($subcategories as $sub){
                 if(!$sub->getArticles()->isEmpty()){
-                    $content .= '<a class="dropdown-item" href="#">' . $sub->getName() . '</a>';
+                    $content .= '<a class="dropdown-item" href="/articles/list/' . $a->getName() . '/sub/' . $sub->getName() . '">' . $sub->getName() . '</a>';
                     $tempSub = true;
                 }
             };
@@ -59,7 +59,7 @@ class Navbar
                 foreach($country as $count)
                 {
                     if(!$count->getArticles()->isEmpty()){
-                       $content .= '<a class="dropdown-item" href="#">' . $count->getName() . '</a>'; 
+                       $content .= '<a class="dropdown-item" href="/articles/list/' . $a->getName() . '/pays/' . $count->getName() . '">' . $count->getName() . '</a>'; 
                     }
                 }
             }

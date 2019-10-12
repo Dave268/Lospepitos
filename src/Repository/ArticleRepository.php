@@ -37,17 +37,37 @@ class ArticleRepository extends ServiceEntityRepository
 		return new Paginator($query, true);
 	}
 	
-	public function getPublishedArticles($page, $nbPerPage, $category)
+	public function getPublishedArticles($page, $nbPerPage, $category, $type, $sub)
 	{
-		$query = $this->createQueryBuilder('a');
-		$query->leftJoin('a.categories', 'cat')
-			->addSelect('cat');
-		$query->where($query->expr()->in('cat.id', $category))
-			->andWhere('a.status = :status')
-			->setParameter('status', 'published')
-			->orderBy('a.date_add', 'DESC')
-			->getQuery()
-		;
+		if($type == 'pays'){
+			$query = $this->createQueryBuilder('a')
+				->where('category.name = :category')
+				->andWhere('country.name = :sub')
+				->andWhere('a.status = :status')
+				->setParameters(array('category' => $category, 'sub' => $sub, 'status' => 'Published'))
+				->leftJoin('a.categories', 'category')
+            	->addSelect('category')
+				->leftJoin('a.country', 'country')
+            	->addSelect('country')
+				->orderBy('a.date_add', 'DESC')
+				->getQuery()
+			;
+		}
+		else if($type == 'sub'){
+			$query = $this->createQueryBuilder('a')
+				->where('category.name = :category')
+				->andWhere('sub.name = :sub')
+				->andWhere('a.status = :status')
+				->setParameters(array('category' => $category, 'sub' => $sub, 'status' => 'Published'))
+				->leftJoin('a.categories', 'category')
+            	->addSelect('category')
+				->leftJoin('a.subCategories', 'sub')
+            	->addSelect('sub')
+				->orderBy('a.date_add', 'DESC')
+				->getQuery()
+			;
+		}
+		
 
 		$query
 		  ->setFirstResult(($page-1) * $nbPerPage)

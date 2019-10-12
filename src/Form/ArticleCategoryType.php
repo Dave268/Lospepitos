@@ -17,6 +17,7 @@ class ArticleCategoryType extends AbstractType
     {
         $builder
             ->add('name',       TextType::class, ['attr' => ['autofocus' => 'autofocus']])
+            ->add('subtitle',   TextType::class)
             ->add('font',       TextType::class)
             ->add('Envoyer', 	SubmitType::class)
         ;

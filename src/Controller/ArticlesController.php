@@ -20,36 +20,28 @@ use App\Service\Navbar;
 
 class ArticlesController extends AbstractController
 {
-    public function articles($category, $page)
+    public function articles($category, $type, $sub, $page)
     {
 		$nbPerPage = 10;
 
 		$listArticles = $this->getDoctrine()
 		  ->getManager()
 		  ->getRepository(Article::class)
-		  ->getPublishedArticles($page, $nbPerPage, $category)
+		  ->getPublishedArticles($page, $nbPerPage, $category, $type, $sub)
 		;
 
 		$nbPages = ceil(count($listArticles) / $nbPerPage);
 
-		//if ($page > $nbPages) {
-		  //throw $this->createNotFoundException("La page ".$page." n'existe pas.");
-		//}
-		$content = 'blog';
-
-		if ($category == 1)
-		{
-			$content = 'article';
-		}
+		$categoryEntity = $this->getDoctrine()->getManager()->getRepository(ArticleCategory::class)->findOneByName($category);
 
 		$text = $this->getDoctrine()
 			->getManager()
 			->getRepository(Content::class)
-			->findOneByType($content)
+			->findOneByType($category)
 		;
 
         return $this->render('pages/articles/articles.html.twig', array(
-			'category'		=> $category,
+			'category'		=> $categoryEntity,
 		  	'listArticles' 	=> $listArticles,
 		  	'nbPages'     	=> $nbPages,
 		  	'page'        	=> $page,

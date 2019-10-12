@@ -19,32 +19,25 @@ class ArticleCategoryRepository extends ServiceEntityRepository
         parent::__construct($registry, ArticleCategory::class);
     }
 
-    // /**
-    //  * @return ArticleCategory[] Returns an array of ArticleCategory objects
-    //  */
-    /*
-    public function findByExampleField($value)
-    {
-        return $this->createQueryBuilder('a')
-            ->andWhere('a.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('a.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
-    }
-    */
+    public function getActiveCountry($id, $cat)
+	{
+        $query = $this->createQueryBuilder('a')
+            ->where('c.id = :id')
+            ->andWhere('d.status = :status')
+            ->andWhere('e.id = :continent')
+            ->setParameters(array('id' => $id, 'status' => 'Published', 'continent' => $cat))
+		    ->leftJoin('a.continent', 'c')
+            ->addSelect('c')
+            ->leftJoin('a.articles', 'd')
+            ->addSelect('d')
+            ->leftJoin('d.categories', 'e')
+            ->addSelect('e')
+			->orderBy('a.name', 'ASC')
+			->getQuery()
+		;
 
-    /*
-    public function findOneBySomeField($value): ?ArticleCategory
-    {
-        return $this->createQueryBuilder('a')
-            ->andWhere('a.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
-    }
-    */
+		// Enfin, on retourne l'objet Paginator correspondant à la requête construite
+		// (n'oubliez pas le use correspondant en début de fichier)
+		return $query->getResult();
+	}
 }

@@ -26,6 +26,11 @@ class ArticleCategory
     /**
      * @ORM\Column(type="string", length=255)
      */
+    private $subtitle;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
     private $font;
 
     /**
@@ -128,6 +133,18 @@ class ArticleCategory
                 $subCategory->setCategory(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getSubtitle(): ?string
+    {
+        return $this->subtitle;
+    }
+
+    public function setSubtitle(string $subtitle): self
+    {
+        $this->subtitle = $subtitle;
 
         return $this;
     }
