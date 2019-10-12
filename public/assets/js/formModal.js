@@ -34,6 +34,7 @@ var $envoi = true;
         e.preventDefault();
         getForm($(this));
     });
+    
     function updateArticle(){
         if($envoi == true)
         {

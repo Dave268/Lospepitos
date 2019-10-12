@@ -75,8 +75,15 @@ class Article
 
     /**
      * @ORM\ManyToMany(targetEntity="App\Entity\ArticleCategory", inversedBy="articles", cascade={"persist"})
+     * @ORM\JoinColumn(nullable=true)
      */
     private $categories;
+
+    /**
+     * @ORM\ManyToMany(targetEntity="App\Entity\SubCategory", inversedBy="articles", cascade={"persist"})
+     * @ORM\JoinColumn(nullable=true)
+     */
+    private $subCategories;
 
 
     public function __construct()
@@ -84,6 +91,7 @@ class Article
 	    $this->date_add = new \Datetime();
 	    $this->date_post = new \Datetime();
         $this->categories = new ArrayCollection();
+        $this->subCategories = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -249,4 +257,29 @@ class Article
         return $this;
     }
 
+    /**
+     * @return Collection|SubCategory[]
+     */
+    public function getSubCategories(): Collection
+    {
+        return $this->subCategories;
+    }
+
+    public function addSubCategory(SubCategory $subCategory): self
+    {
+        if (!$this->subCategories->contains($subCategory)) {
+            $this->subCategories[] = $subCategory;
+        }
+
+        return $this;
+    }
+
+    public function removeSubCategory(SubCategory $subCategory): self
+    {
+        if ($this->subCategories->contains($subCategory)) {
+            $this->subCategories->removeElement($subCategory);
+        }
+
+        return $this;
+    }
 }

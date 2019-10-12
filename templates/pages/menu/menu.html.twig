@@ -26,12 +26,13 @@
         <div class="col-12 col-sm-6 col-md-3 col-lg-2" style="">
             <div class="gallery" style="padding: 15px;width: 100%;border-radius: 5px;"><h4 style="text-align:center;">Onglets</h4>
             </div>
-            <div class="gallery" style="padding: 0px;width: 100%;border-radius: 5px;"><button onclick="window.location.href='{{ path('admin_articles_category_add') }}'" class="btn btn-light btn-lg addbutton" type="button" style="font-size: 15px;"><i class="fa fa-plus" style=""></i>&nbsp;Nouvelle Onglet</button>
+            <div class="gallery" style="padding: 0px;width: 100%;border-radius: 5px; ">
+            <a class="btn btn-light btn-lg addbutton addForm" type="button" data-type="Nouvelle catégorie" href="{{ path('admin_articles_category_add') }}"><i class="fa fa-plus" style=""></i>&nbsp;Nouvelle Onglet</a>
             </div>
         </div>
         {% for category in listCategory %}
         <div class="col-12 col-sm-6 col-md-3 col-lg-2" style="">
-            <div class="gallery" style="padding: 15px;width: 100%;border-radius: 5px;"><h5 style="text-align:center;">{{ category.name }}</h5>
+            <div class="gallery" style="padding: 15px;width: 100%;border-radius: 5px; height: 100%;"><h5 style="text-align:center;">{{ category.name }}</h5>
                 <div class="desc">
                     <span class="icon"><a class="flag" href="{{ path('admin_articles_category_modify', {id: category.id}) }}">&nbsp;&nbsp;<i class="fa fa-pencil actionicon"></i></a><a class="flag" data-href="{{ path('admin_articles_category_delete', {id: category.id}) }}" data-toggle="modal" data-target="#confirm-delete">&nbsp;&nbsp;<i class="fa fa-trash-o actionicon"></i></a></span>
                 </div>
@@ -44,7 +45,8 @@
         <div class="col-12 col-sm-6 col-md-3 col-lg-2" style="">
             <div class="gallery" style="padding: 15px;width: 100%;border-radius: 5px;"><h4 style="text-align:center;">Sous-catégories</h4>
             </div>
-            <div class="gallery" style="padding: 0px;width: 100%;border-radius: 5px;"><button onclick="window.location.href='{{ path('admin_subcategory_add') }}'" class="btn btn-light btn-lg addbutton" type="button" style="font-size: 15px;"><i class="fa fa-plus" style=""></i>&nbsp;Nouvelle sous-catégorie</button>
+            <div class="gallery" style="padding: 0px;width: 100%;border-radius: 5px;">
+            <a class="btn btn-light btn-lg addbutton addForm" type="button" data-type="Nouvelle sous-catégorie" href="{{ path('admin_subcategory_add') }}"><i class="fa fa-plus" style=""></i>&nbsp;Nouvelle sous-catégorie</a>
             </div>
         </div>
         {% for category in listSubCategory %}
@@ -62,7 +64,8 @@
         <div class="col-12 col-sm-6 col-md-3 col-lg-2" style="">
             <div class="gallery" style="padding: 15px;width: 100%;border-radius: 5px;"><h4 style="text-align:center;">Continents</h4>
             </div>
-            <div class="gallery" style="padding: 0px;width: 100%;border-radius: 5px;"><button onclick="window.location.href='{{ path('admin_articles_continent_add') }}'" class="btn btn-light btn-lg addbutton" type="button" style="font-size: 15px;"><i class="fa fa-plus" style=""></i>&nbsp;Nouveau Continent</button>
+            <div class="gallery" style="padding: 0px;width: 100%;border-radius: 5px;">
+            <a class="btn btn-light btn-lg addbutton addForm" type="button" data-type="Nouveau Continent" href="{{ path('admin_articles_continent_add') }}"><i class="fa fa-plus" style=""></i>&nbsp;Nouveau Continent</a>
             </div>
         </div>
         {% for category in listContinent %}
@@ -80,7 +83,8 @@
         <div class="col-12 col-sm-6 col-md-3 col-lg-2" style="">
             <div class="gallery" style="padding: 15px;width: 100%;border-radius: 5px;"><h4 style="text-align:center;">Pays</h4>
             </div>
-            <div class="gallery" style="padding: 0px;width: 100%;border-radius: 5px;"><button onclick="window.location.href='{{ path('admin_articles_country_add') }}'" class="btn btn-light btn-lg addbutton" type="button" style="font-size: 15px;"><i class="fa fa-plus" style=""></i>&nbsp;Nouveau Pays</button>
+            <div class="gallery" style="padding: 0px;width: 100%;border-radius: 5px;">
+            <a class="btn btn-light btn-lg addbutton addForm" type="button" data-type="Nouveau Pays" href="{{ path('admin_articles_country_add') }}"><i class="fa fa-plus" style=""></i>&nbsp;Nouveau Pays</a>
             </div>
         </div>
         {% for category in listCountry %}
@@ -96,6 +100,62 @@
 </div>
         </div>
     </div>
+
+    <div class="modal fade" role="dialog" tabindex="-1" id="modalFolder">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header" style="background-color:rgba(249,2,2,0);">
+                    
+                    <h4 id="modalTitle" class="modal-title" style="text-align:center;">
+
+                    </h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button></div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-10 mx-auto">
+                            <div id="folderForm"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 {% endblock %}
 
-{% block script %}{% endblock %}
+{% block script %}
+    <script>
+    function getForm(item) {
+        $("#modalTitle").html(item.attr("data-type"));
+        console.log(item.attr("data-type"));
+
+        var $href = item.attr('href');
+
+
+        $.ajax({
+            url: $href,
+            type: "GET",
+            dataType: 'html',
+            success: function (obj) {
+
+                $("#folderForm").html(obj);
+                $('#modalFolder').modal("show");
+                setTimeout(function(){$('#folderForm').find('input[type=text]').focus();},100);               
+            },
+            complete: function () {
+                console.log("complete!");
+
+            },
+            error: function (err) {
+                console.log('error');
+                console.log(err);
+            }
+        });
+    }
+    $(document).ready( function() {
+        $(".addForm").click(function (e) {
+            e.preventDefault();
+            getForm($(this));
+        });
+    });
+    </script>
+{% endblock %}

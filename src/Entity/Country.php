@@ -29,7 +29,7 @@ class Country
     private $articles;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Continent", inversedBy="country")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Continent", inversedBy="countries")
      */
     private $continent;
 

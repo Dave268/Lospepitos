@@ -16,6 +16,7 @@ use App\Form\CountryType;
 use App\Form\ArticleCategoryType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Filesystem\Filesystem;
+use App\Service\Navbar;
 
 class ArticlesController extends AbstractController
 {
@@ -126,6 +127,11 @@ class ArticlesController extends AbstractController
 		$em->persist($article);
 		$em->flush();
 
+		//on met à jour la barre de navigation
+		$menu = new Navbar($em);
+		$filesystem = new Filesystem();
+		$filesystem->dumpFile(__DIR__ . '../../../templates/core/navbar.html.twig', $menu->setNavbar());
+
 		return $this->redirectToRoute('admin_articles_modify', array('id' => $article->getId()));
     }
 	
@@ -162,6 +168,12 @@ class ArticlesController extends AbstractController
 			
 			$em->persist($article);
 			$em->flush();
+
+			//on met à jour la barre de navigation
+            $menu = new Navbar($em);
+			$filesystem = new Filesystem();
+			$filesystem->dumpFile(__DIR__ . '../../../templates/core/navbar.html.twig', $menu->setNavbar());
+
 			if($request->isXmlHttpRequest())
 				{
 					$json = json_encode(array(
@@ -189,33 +201,15 @@ class ArticlesController extends AbstractController
 		$em = $this->getDoctrine()->getManager();
 		$em->remove($article);
 		$em->flush();
+
+		//on met à jour la barre de navigation
+		$menu = new Navbar($em);
+		$filesystem = new Filesystem();
+		$filesystem->dumpFile(__DIR__ . '../../../templates/core/navbar.html.twig', $menu->setNavbar());
 		
 		$request->getSession()->getFlashBag()->add('success', 'L\'article est bien supprimé.');
 
 
 		return $this->redirectToRoute('admin_articles');
 	}
-
-	public function updateArticle($id, $field, $data,Request $request)
-    {
-		$article = $this->getDoctrine()->getManager()->getRepository(Article::class)->find($id);
-		$article->setText($data);
-        
-		$em = $this->getDoctrine()->getManager();
-		$em->persist($article);
-		$em->flush();
-
-            if($request->isXmlHttpRequest()) {
-
-                $json = json_encode(array(
-                    'id' => $article->getId(),
-                ));
-
-                $response = new Response($json);
-                $response->headers->set('Content-Type', 'application/json');
-
-                return $response;
-            }
-
-        }
 }

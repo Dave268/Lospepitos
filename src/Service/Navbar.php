@@ -38,18 +38,29 @@ class Navbar
             $content .= '<div class="dropdown-menu" aria-labelledby="navbarDropdown">';
 
             $subcategories = $this->em->getRepository(SubCategory::class)->findBy(['category' => $a]);
+            $tempSub = false;
             foreach ($subcategories as $sub){
-                $content .= '<a class="dropdown-item" href="#">' . $sub->getName() . '</a>';
+                if(!$sub->getArticles()->isEmpty()){
+                    $content .= '<a class="dropdown-item" href="#">' . $sub->getName() . '</a>';
+                    $tempSub = true;
+                }
             };
-            $content .= '<div class="dropdown-divider"></div>';
+
+            //si on a une sous-catégorie on la sépare des pays avec une ligne
+            if($tempSub){
+                $content .= '<div class="dropdown-divider"></div>';
+            }
+            
 
             $continent = $this->em->getRepository(Continent::class)->findAll();
             foreach ($continent as $con){
                 //$content .= '<h6 class="dropdown-header">' . $con->getName() .'</h6>';
-                $country = $this->em->getRepository(Country::class)->findBy(['continent' => $con]);
+                $country = $this->em->getRepository(Country::class)->getActiveCountry($con->getId(), $a->getId());
                 foreach($country as $count)
                 {
-                    $content .= '<a class="dropdown-item" href="#">' . $count->getName() . '</a>';
+                    if(!$count->getArticles()->isEmpty()){
+                       $content .= '<a class="dropdown-item" href="#">' . $count->getName() . '</a>'; 
+                    }
                 }
             }
 

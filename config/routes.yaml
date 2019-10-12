@@ -92,10 +92,6 @@ admin_articles_delete:
     requirements:
         id: '\d+'
 
-admin_articles_update:
-    path: /admin/article/update/{id}/{field}/{data}
-    controller: App\Controller\ArticlesController::updateArticle
-
 admin_gallery:
     path: /admin/gallery/{page}
     controller: App\Controller\GalleryController::adminGallery

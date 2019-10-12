@@ -24,13 +24,15 @@ class Continent
     private $name;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Country", mappedBy="continent")
+     * @ORM\OneToMany(targetEntity="App\Entity\Country", mappedBy="continent", cascade={"persist"})
+     * @ORM\JoinColumn(nullable=true)
      */
-    private $articles;
-
+    private $countries;
+    
     public function __construct()
     {
         $this->articles = new ArrayCollection();
+        $this->countries = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -51,30 +53,30 @@ class Continent
     }
 
     /**
-     * @return Collection|Article[]
+     * @return Collection|Country[]
      */
-    public function getArticles(): Collection
+    public function getCountries(): Collection
     {
-        return $this->articles;
+        return $this->countries;
     }
 
-    public function addArticle(Article $article): self
+    public function addCountry(Country $country): self
     {
-        if (!$this->articles->contains($article)) {
-            $this->articles[] = $article;
-            $article->setContinent($this);
+        if (!$this->countries->contains($country)) {
+            $this->countries[] = $country;
+            $country->setContinent($this);
         }
 
         return $this;
     }
 
-    public function removeArticle(Article $article): self
+    public function removeCountry(Country $country): self
     {
-        if ($this->articles->contains($article)) {
-            $this->articles->removeElement($article);
+        if ($this->countries->contains($country)) {
+            $this->countries->removeElement($country);
             // set the owning side to null (unless already changed)
-            if ($article->getContinent() === $this) {
-                $article->setContinent(null);
+            if ($country->getContinent() === $this) {
+                $country->setContinent(null);
             }
         }
 

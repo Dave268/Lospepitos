@@ -19,23 +19,27 @@ class CountryRepository extends ServiceEntityRepository
         parent::__construct($registry, Country::class);
     }
 
-    // /**
-    //  * @return Country[] Returns an array of Country objects
-    //  */
-    /*
-    public function findByExampleField($value)
-    {
-        return $this->createQueryBuilder('c')
-            ->andWhere('c.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('c.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
-    }
-    */
+    public function getActiveCountry($id, $cat)
+	{
+        $query = $this->createQueryBuilder('a')
+            ->where('c.id = :id')
+            ->andWhere('d.status = :status')
+            ->andWhere('e.id = :continent')
+            ->setParameters(array('id' => $id, 'status' => 'Published', 'continent' => $cat))
+		    ->leftJoin('a.continent', 'c')
+            ->addSelect('c')
+            ->leftJoin('a.articles', 'd')
+            ->addSelect('d')
+            ->leftJoin('d.categories', 'e')
+            ->addSelect('e')
+			->orderBy('a.name', 'ASC')
+			->getQuery()
+		;
 
+		// Enfin, on retourne l'objet Paginator correspondant à la requête construite
+		// (n'oubliez pas le use correspondant en début de fichier)
+		return $query->getResult();
+	}
     /*
     public function findOneBySomeField($value): ?Country
     {
