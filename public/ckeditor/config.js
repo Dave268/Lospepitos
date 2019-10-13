@@ -24,7 +24,7 @@ CKEDITOR.editorConfig = function( config ) {
 		//{ name: 'about' }
 	];
 
-	config.image2_captionedClass = 'img-fluid';
+	config.image2_captionedClass = 'border rounded text-justify profile-card';
 	
 	config.extraPlugins = "bootstrapVisibility, pastetext, ckawesome, imageresponsive, lineutils, btgrid";
 	config.allowedContent = true;

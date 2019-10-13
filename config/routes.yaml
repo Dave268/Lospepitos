@@ -20,8 +20,7 @@ articles:
     path: /articles/list/{category}/{type}/{sub}/{page}
     controller: App\Controller\ArticlesController::articles
     defaults:
-        category: 1
-        type: 'pays'
+        type: 'all'
         sub: 'all'
         page: 1
     requirements:

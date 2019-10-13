@@ -10,6 +10,7 @@ use App\Entity\Content;
 use App\Entity\Continent;
 use App\Entity\Country;
 use App\Entity\ArticleCategory;
+use App\Entity\SubCategory;
 use App\Form\ArticleType;
 use App\Form\ContinentType;
 use App\Form\CountryType;
@@ -45,7 +46,9 @@ class ArticlesController extends AbstractController
 		  	'listArticles' 	=> $listArticles,
 		  	'nbPages'     	=> $nbPages,
 		  	'page'        	=> $page,
-			'text'			=> $text
+			'text'			=> $text,
+			'type'			=> $type,
+			'sub'			=> $sub
 		));
     }
 	
@@ -105,14 +108,6 @@ class ArticlesController extends AbstractController
 		$article->setUrl('Chemin vers image');
 		$article->setAlt('Image');
 		$article->setGps('-28.5333300751266, 28.129878797779497');
-
-		$country = $this->getDoctrine()->getManager()->getRepository(Country::class)->find(1);
-		$continent = $this->getDoctrine()->getManager()->getRepository(Continent::class)->find(1);
-		$category = $this->getDoctrine()->getManager()->getRepository(ArticleCategory::class)->find(1);
-
-		$article->setCountry($country);
-		$article->setContinent($continent);
-		$article->addCategory($category);
 
 		$em = $this->getDoctrine()->getManager();
 		

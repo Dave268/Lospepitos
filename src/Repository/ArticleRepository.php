@@ -37,7 +37,7 @@ class ArticleRepository extends ServiceEntityRepository
 		return new Paginator($query, true);
 	}
 	
-	public function getPublishedArticles($page, $nbPerPage, $category, $type, $sub)
+	public function getPublishedArticles($page, $nbPerPage, $category, $type = 'all', $sub = 'all')
 	{
 		if($type == 'pays'){
 			$query = $this->createQueryBuilder('a')
@@ -63,6 +63,17 @@ class ArticleRepository extends ServiceEntityRepository
             	->addSelect('category')
 				->leftJoin('a.subCategories', 'sub')
             	->addSelect('sub')
+				->orderBy('a.date_add', 'DESC')
+				->getQuery()
+			;
+		}
+		else {
+			$query = $this->createQueryBuilder('a')
+				->where('category.name = :category')
+				->andWhere('a.status = :status')
+				->setParameters(array('category' => $category, 'status' => 'Published'))
+				->leftJoin('a.categories', 'category')
+            	->addSelect('category')
 				->orderBy('a.date_add', 'DESC')
 				->getQuery()
 			;

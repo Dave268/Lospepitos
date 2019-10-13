@@ -15,13 +15,13 @@ class CoreController extends AbstractController
 		$listArticles = $this->getDoctrine()
 		  ->getManager()
 		  ->getRepository(Article::class)
-		  ->getPublishedArticles(1, 3, 1)
+		  ->getPublishedArticles(1, 3, "Notre Projet Ecolo")
 		;
 		
 		$listBlog = $this->getDoctrine()
 		  ->getManager()
 		  ->getRepository(Article::class)
-		  ->getPublishedArticles(1, 3, 2)
+		  ->getPublishedArticles(1, 3, "Journal De Voyage")
 		;
 
 		$listImage = $this->getDoctrine()
