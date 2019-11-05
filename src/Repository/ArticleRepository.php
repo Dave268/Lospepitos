@@ -67,6 +67,14 @@ class ArticleRepository extends ServiceEntityRepository
 				->getQuery()
 			;
 		}
+		else if($category == 'all'){
+			$query = $this->createQueryBuilder('a')
+				->where('a.status = :status')
+				->setParameters(array('status' => 'Published'))
+				->orderBy('a.date_add', 'DESC')
+				->getQuery()
+			;
+		}
 		else {
 			$query = $this->createQueryBuilder('a')
 				->where('category.name = :category')

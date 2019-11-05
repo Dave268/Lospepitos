@@ -15,14 +15,14 @@ class CoreController extends AbstractController
 		$listArticles = $this->getDoctrine()
 		  ->getManager()
 		  ->getRepository(Article::class)
-		  ->getPublishedArticles(1, 3, "Notre Projet Ecolo")
+		  ->getPublishedArticles(1, 5, "all")
 		;
-		
-		$listBlog = $this->getDoctrine()
-		  ->getManager()
-		  ->getRepository(Article::class)
-		  ->getPublishedArticles(1, 3, "Journal De Voyage")
-		;
+
+		$listGPS = $this->getDoctrine()
+		->getManager()
+		->getRepository(Article::class)
+		->findAll()
+	  ;
 
 		$listImage = $this->getDoctrine()
 		  ->getManager()
@@ -37,7 +37,7 @@ class CoreController extends AbstractController
 		;
         return $this->render('pages/home.html.twig', array(
 		'listArticles' 	=> $listArticles,
-		'listBlog'		=> $listBlog,
+		'listGPS'		=> $listGPS,
 		'listImage'		=> $listImage,
 		'text'			=> $text));
     }

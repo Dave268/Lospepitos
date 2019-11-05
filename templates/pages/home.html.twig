@@ -59,50 +59,26 @@
                 </div>
 			</div>
             <div class="col-12 col-lg-8 col-list-art">
-                    <div id='map' style='width: 100%; min-height: 300px; height: 100%;margin-bottom: 20px;margin-top: 20px;'></div>
+                    <div id='map' style='width: 100%; min-height: 300px; height: 100%;margin-bottom: 20px;margin-top: 20px; border-radius: 5px;'></div>
             </div>
         </div>
         </div>
         <div class="row" style="margin-top: 50px">
-            <div class="col-12 col-lg-6 col-list-art" style"margin-bottom: 25px;">
+            <div class="col-12 col-list-art" style"margin-bottom: 25px;">
                 <div class="row">
                     <div class="col head-article-list">
-                        <h2>Notre Projet Ecolo...</h2>
+                        <h2>Nos derniers articles...</h2>
                     </div>
                 </div>
                 {% for  article in listArticles %}
                 <div class="row article-row">
-                    <div class="col-12 col-sm-4 col-md-4 col-lg-3 col-article-img"><img class="float-left article-img" style="max-height:110px;"  src="{{ asset(article.url) }}"></div>
-                    <div class="col-12 col-sm-8 col-md-8 col-lg-9 news-bg" style="padding: 15px 10px;">
+                    <div class="col-12 col-sm-4 col-md-4 col-lg-3 col-article-img"><div class="img-thumbnail img-fluid img-container" style=""><div class="thumb" style="background-image: url('{{ asset(article.url) }}')" data-source="{{ asset(article.url) }}"></div></div></div>
+                    <div class="col-12 col-sm-8 col-md-8 col-lg-9 news-bg" style="padding: 15px 10px; ">
                         <h1 class="newsblock-title-under" style="/*font-family: Raleway, sans-serif;*/"><a href="{{ path('article_view', {id: article.id}) }}">{{article.title}}</a></h1>
                         <p class="text-justify">{{ article.short}}...<a href="{{ path('article_view', {id: article.id}) }}"><span>&nbsp;Lire la suite&nbsp;<i class="fa fa-chevron-right" style="color: rgba(33,37,41,0.5);"></i></span></a><span style="color:grey; float: right; font-style:italic;"> - posté le: {{ article.datepost|date("d/m/Y") }} - </span></p>
                     </div>
                 </div>
                 {% endfor %}
-                <div class="row">
-                    <div class="col" style="padding-left: 0px;padding-top: 10px;padding-bottom: 10px;"><a class="text-left" href="{{ path('articles', {category: 'Notre Projet Ecolo' }) }}" style="font-size: 15px;font-style: italic;">...Plus d'articles&nbsp;<i class="fa fa-chevron-right" style="color: rgba(33,37,41,0.5);font-size: 12px;"></i></a></div>
-                </div>
-            </div>
-            <div class="col-12 col-lg-6 col-list-art" style"margin-bottom: 25px;">
-                
-                <div class="row">
-                    <div class="col head-article-list">
-                        <h2>Journal de Voyage...</h2>
-                    </div>
-                </div>
-                {% for  blog in listBlog %}
-                <div class="row article-row">
-                    <div class="col-12 col-sm-4 col-md-4 col-lg-3 col-article-img"><img class="float-left article-img" style="max-height:110px;"  src="{{ asset(blog.url) }}"></div>
-                    <div class="col-12 col-sm-8 col-md-8 col-lg-9 news-bg" style="padding: 15px 10px;">
-                        <h1 class="newsblock-title-under" style="/*font-family: Raleway, sans-serif;*/"><a href="{{ path('article_view', {id: blog.id}) }}">{{blog.title}}<a/></h1>
-                        <p class="text-justify">{{ blog.short}}...<a href="{{ path('article_view', {id: blog.id}) }}"><span>&nbsp;Lire la suite&nbsp;<i class="fa fa-chevron-right" style="color: rgba(33,37,41,0.5);"></i></span></a><span style="color:grey; float: right; font-style:italic;"> - posté le: {{ blog.datepost|date("d/m/Y") }} - </span></p>
-                        
-                    </div>
-                </div>
-                {% endfor %}
-                <div class="row">
-                    <div class="col" style="padding-left: 0px;padding-top: 10px;padding-bottom: 10px;"><a class="text-left" href="{{ path('articles', {category: 'Journal De Voyage' }) }}" style="font-size: 15px;font-style: italic;">...Vers le journal de voyage&nbsp;<i class="fa fa-chevron-right" style="color: rgba(33,37,41,0.5);font-size: 12px;"></i></a></div>
-                </div>
             </div>
 		</div>
     </article>
@@ -143,21 +119,7 @@ var map = new mapboxgl.Map({
 var geojson = {
   type: 'FeatureCollection',
   features: [
-      {% for blog in listBlog %}
-      {
-    type: 'Feature',
-    geometry: {
-      type: 'Point',
-      coordinates: [ {{ blog.gps}}]
-    },
-    properties: {
-      title: '{{ blog.title }}',
-      description: '<a href="{{ path('article_view', {id: blog.id}) }}">Lire L\'article</a>',
-      iconSize: ['80px', '80px']
-    }
-  },
-  {% endfor %}
-  {% for article in listArticles %}
+  {% for article in listGPS %}
       {
     type: 'Feature',
     geometry: {
@@ -196,9 +158,8 @@ map.fitBounds(bounds, { padding: 50 });
 
 </script>
 <script>
-var width = $('.thumb').width();
-$('.thumb').height(width / 16 * 8);
-$('.img-container').height((width / 16 * 8));
+$('article .img-container').height(($('article .thumb').width() / 16 * 8));
+$('#bestimage .img-container').height(($('#bestimage .thumb').width() / 16 * 8));
     $('#bestimage .thumb').each(function ()
     {
         var currentImage = $(this);
