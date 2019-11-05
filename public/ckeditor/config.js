@@ -26,7 +26,9 @@ CKEDITOR.editorConfig = function( config ) {
 
 	config.image2_captionedClass = 'border rounded text-justify profile-card';
 	
-	config.extraPlugins = "bootstrapVisibility, pastetext, ckawesome, imageresponsive, lineutils, btgrid";
+	config.extraPlugins = "bootstrapVisibility, pastetext, ckawesome, lineutils, autogrow";
+	config.autoGrow_minHeight = 400;
+	config.autoGrow_maxHeight = 1200;
 	config.allowedContent = true;
 	
 	config.contentsCss = 'https://fonts.googleapis.com/css?family=Andada|Buenard|Cedarville+Cursive|Cookie|Cormorant+Garamond|Dancing+Script|EB+Garamond|Indie+Flower|Montserrat|Old+Standard+TT|Pacifico&display=swap';

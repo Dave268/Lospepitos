@@ -7,6 +7,15 @@
 {% endblock %}
 
 {% block body %}
+<style>
+  .thumb {
+     width: 100%;
+     height: 100%;
+     background-position: 50% 50%;
+     background-repeat: no-repeat;
+     background-size: cover;
+  }
+ </style>
 <div class="row" style="padding-top: 70px;background-color: rgb(255,252,243);">
         <div class="col" style="padding-top: 0px;">
             <h1 class="text-center title-page" style="font-weight: 500;font-style: italic;font-family: 'Cedarville Cursive', cursive;color: rgb(0,29,58);">{{ title }}</h1>
@@ -16,7 +25,8 @@
 <div class="container" style="padding-bottom: 50px;">
     <div class="row text-center text-lg-left">
     {% for photo in album %}
-        <div class="col-12 col-sm-6 col-md-4 col-lg-3 col-xl-2"><img class="img-thumbnail img-fluid img-container" id="pop" src="{{ asset(photo) }}" alt=" "></div>
+        <div class="col-12 col-sm-6 col-md-4 col-lg-3 col-xl-2">
+        <div class="img-thumbnail img-fluid img-container" style="margin: 10px"><div class="thumb" style="background-image: url('{{ asset(photo) }}')" data-source="{{ asset(photo) }}"></div></div><!--<img class="img-thumbnail img-fluid img-container" id="pop" src="{{ asset(photo) }}" alt=" ">--></div>
     {% endfor %}
     </div>
 </div>
@@ -24,10 +34,13 @@
 
 {% block script %}
 <script>
-    $('.container img').each(function ()
+var width = $('.thumb').width();
+$('.thumb').height(width / 16 * 8);
+$('.img-container').height((width / 16 * 8));
+    $('.container .thumb').each(function ()
     {
         var currentImage = $(this);
-        currentImage.wrap("<a href='" + currentImage.attr("src") + "' data-toggle='lightbox' data-gallery='example-gallery' class='d-block mb-4 h-100'></a>");
+        currentImage.wrap("<a href='" + currentImage.attr("data-source") + "' data-toggle='lightbox' data-gallery='example-gallery' class='d-block mb-4 h-100'></a>");
     });
     $(document).on('click', '[data-toggle="lightbox"]', function(event) {
             event.preventDefault();
