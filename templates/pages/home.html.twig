@@ -33,9 +33,13 @@
   font-family: 'Open Sans', sans-serif;
   font-size: 11px;
 }
-
-
-
+.thumb {
+     width: 100%;
+     height: 100%;
+     background-position: 50% 50%;
+     background-repeat: no-repeat;
+     background-size: cover;
+  }
 </style>
 
 
@@ -113,20 +117,8 @@
                 </div>
                 <div class="row text-center text-lg-left" id="bestimage">
                 {% for  image in listImage %}
-                    <div class="col-12 col-sm-6 col-md-4 col-lg-3 col-xl-2"><img class="img-thumbnail img-fluid img-container" src="{{ asset( image.url )}}" alt=" "></div>
+                    <div class="col-12 col-sm-6 col-md-4 col-lg-3 col-xl-2"><div class="img-thumbnail img-fluid img-container" style="margin: 10px"><div class="thumb" style="background-image: url('{{ asset(image.url) }}')" data-source="{{ asset(image.url) }}"></div></div></div>
                 {% endfor %}
-                    <!--<div class="col-12 col-sm-6 col-md-4 col-lg-3 col-xl-2"><a class="d-block mb-4 h-100" href="#"><img class="img-thumbnail img-fluid img-container" src="https://source.unsplash.com/aob0ukAYfuI/400x300" alt=" "></a></div>
-                    <div class="col-12 col-sm-6 col-md-4 col-lg-3 col-xl-2"><a class="d-block mb-4 h-100" href="#"><img class="img-thumbnail img-fluid img-container" src="https://source.unsplash.com/EUfxH-pze7s/400x300" alt=" "></a></div>
-                    <div class="col-12 col-sm-6 col-md-4 col-lg-3 col-xl-2"><a class="d-block mb-4 h-100" href="#"><img class="img-thumbnail img-fluid img-container" src="https://source.unsplash.com/M185_qYH8vg/400x300" alt=" "></a></div>
-                    <div class="col-12 col-sm-6 col-md-4 col-lg-3 col-xl-2"><a class="d-block mb-4 h-100" href="#"><img class="img-thumbnail img-fluid img-container" src="https://source.unsplash.com/sesveuG_rNo/400x300" alt=" "></a></div>
-                    <div class="col-12 col-sm-6 col-md-4 col-lg-3 col-xl-2"><a class="d-block mb-4 h-100" href="#"><img class="img-thumbnail img-fluid img-container" src="https://source.unsplash.com/aob0ukAYfuI/400x300" alt=" "></a></div>
-                    <div class="col-12 col-sm-6 col-md-4 col-lg-3 col-xl-2"><a class="d-block mb-4 h-100" href="#"><img class="img-thumbnail img-fluid img-container" src="https://source.unsplash.com/EUfxH-pze7s/400x300" alt=" "></a></div>
-                    <div class="col-12 col-sm-6 col-md-4 col-lg-3 col-xl-2"><a class="d-block mb-4 h-100" href="#"><img class="img-thumbnail img-fluid img-container" src="https://source.unsplash.com/M185_qYH8vg/400x300" alt=" "></a></div>
-                    <div class="col-12 col-sm-6 col-md-4 col-lg-3 col-xl-2"><a class="d-block mb-4 h-100" href="#"><img class="img-thumbnail img-fluid img-container" src="https://source.unsplash.com/sesveuG_rNo/400x300" alt=" "></a></div>
-                    <div class="col-12 col-sm-6 col-md-4 col-lg-3 col-xl-2"><a class="d-block mb-4 h-100" href="#"><img class="img-thumbnail img-fluid img-container" src="https://source.unsplash.com/AvhMzHwiE_0/400x300" alt=" "></a></div>
-                    <div class="col-12 col-sm-6 col-md-4 col-lg-3 col-xl-2"><a class="d-block mb-4 h-100" href="#"><img class="img-thumbnail img-fluid img-container" src="https://source.unsplash.com/2gYsZUmockw/400x300" alt=" "></a></div>
-                    <div class="col-12 col-sm-6 col-md-4 col-lg-3 col-xl-2"><a class="d-block mb-4 h-100" href="#"><img class="img-thumbnail img-fluid img-container" src="https://source.unsplash.com/EMSDtjVHdQ8/400x300" alt=" "></a></div>
-                    -->
                 </div>
                 <div class="row">
                     <div class="col" style="padding-left: 0px;padding-top: 10px;padding-bottom: 10px;"><a class="text-left" href="{{ path('gallery') }}" style="font-size: 15px;font-style: italic;">...Vers la galerie&nbsp;<i class="fa fa-chevron-right" style="color: rgba(33,37,41,0.5);font-size: 12px;"></i></a></div>
@@ -204,11 +196,15 @@ map.fitBounds(bounds, { padding: 50 });
 
 </script>
 <script>
-    $('#bestimage img').each(function ()
+var width = $('.thumb').width();
+$('.thumb').height(width / 16 * 8);
+$('.img-container').height((width / 16 * 8));
+    $('#bestimage .thumb').each(function ()
     {
         var currentImage = $(this);
-        currentImage.wrap("<a href='" + currentImage.attr("src") + "' data-toggle='lightbox' data-gallery='example-gallery' class='d-block mb-4 h-100'></a>");
+        currentImage.wrap("<a href='" + currentImage.attr("data-source") + "' data-toggle='lightbox' data-gallery='example-gallery' class='d-block mb-4 h-100'></a>");
     });
+
     $(document).on('click', '[data-toggle="lightbox"]', function(event) {
             event.preventDefault();
             $(this).ekkoLightbox();
