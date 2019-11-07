@@ -3,48 +3,49 @@
 {% extends "core/layout.html.twig" %}
 
 {% block title %}
-    {{ parent() }} - Accueil
+    {{ parent() }}
+    - Accueil
 {% endblock %}
 
 {% block head %}
-<meta name="description"  content="Los Pepitos: Ceci est un blog de voyage ecolo. Trouvez des trucs et astuces ecolo et de voyage." />
-<meta name="keywords"  content="Los Pepitos, lospepitos, voyage, blog, ecolo, ecologique, blog de voyage" />
+    <meta name="description" content="Los Pepitos: Ceci est un blog de voyage ecolo. Trouvez des trucs et astuces ecolo et de voyage."/>
+    <meta name="keywords" content="Los Pepitos, lospepitos, voyage, blog, ecolo, ecologique, blog de voyage"/>
 {% endblock %}
 
 {% block body %}
 
-<style>
-.marker {
-  background-image: url('{{ asset('assets/img/mapbox-icon.png') }}');
-  background-size: cover;
-  width: 24px;
-  height: 24px;
-  border-radius: 50%;
-  cursor: pointer;
-}
+    <style>
+        .marker {
+            background-image: url('{{ asset('assets/img/mapbox-icon.png') }}');
+            background-size: cover;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            cursor: pointer;
+        }
 
-.mapboxgl-popup {
-  max-width: 200px;
-  z-index: 1000;
-}
+        .mapboxgl-popup {
+            max-width: 200px;
+            z-index: 1000;
+        }
 
-.mapboxgl-popup-content {
-  text-align: center;
-  font-family: 'Open Sans', sans-serif;
-  font-size: 11px;
-}
-.thumb {
-     width: 100%;
-     height: 100%;
-     background-position: 50% 50%;
-     background-repeat: no-repeat;
-     background-size: cover;
-  }
-</style>
+        .mapboxgl-popup-content {
+            text-align: center;
+            font-family: 'Open Sans', sans-serif;
+            font-size: 11px;
+        }
+        .thumb {
+            width: 100%;
+            height: 100%;
+            background-position: 50% 50%;
+            background-repeat: no-repeat;
+            background-size: cover;
+        }
+    </style>
 
 
-{% include "core/carousel.html.twig" %}
-<div class="row" style="padding-top: 10px;">
+    {% include "core/carousel.html.twig" %}
+    <div class="row" style="padding-top: 10px;">
         <div class="col" style="padding-top: 0px;">
             <h1 class="text-center title-page" style="font-weight: 500;font-style: italic;font-family: 'Cedarville Cursive', cursive;color: rgb(0,29,58); font-size:45px;">Los Pépitos</h1>
             <h3 class="text-center" style="font-weight: 500;font-style: italic;color: rgb(123,123,123);font-family: 'Cedarville Cursive', cursive;margin-bottom: 0px;">- Entre le Homard et l'Agame -</h3>
@@ -55,32 +56,54 @@
         <div class="row">
             <div class="col-md-12 col-lg-4">
                 <div class="border rounded text-justify profile-card" style=" background-color: rgb(241,238,229);width: 100%;padding: 20px; height: 100%; margin-top: 20px;">
-                {{ text.content|raw }}
+                    {{ text.content|raw }}
                 </div>
-			</div>
+            </div>
             <div class="col-12 col-lg-8 col-list-art">
-                    <div id='map' style='width: 100%; min-height: 300px; height: 100%;margin-bottom: 20px;margin-top: 20px; border-radius: 5px;'></div>
+                <div id='map' style='width: 100%; min-height: 300px; height: 100%;margin-bottom: 20px;margin-top: 20px; border-radius: 5px;'></div>
             </div>
         </div>
-        </div>
-        <div class="row" style="margin-top: 50px">
-            <div class="col-12 col-list-art" style"margin-bottom: 25px;">
+        <div class="row" style="margin-top: 50px;">
+            <div class="col-12" style"margin-bottom: 25px;">
                 <div class="row">
                     <div class="col head-article-list">
                         <h2>Nos derniers articles...</h2>
                     </div>
                 </div>
                 {% for  article in listArticles %}
-                <div class="row article-row">
-                    <div class="col-12 col-sm-4 col-md-4 col-lg-3 col-article-img"><div class="img-thumbnail img-fluid img-container" style=""><div class="thumb" style="background-image: url('{{ asset(article.url) }}')" data-source="{{ asset(article.url) }}"></div></div></div>
-                    <div class="col-12 col-sm-8 col-md-8 col-lg-9 news-bg" style="padding: 15px 10px; ">
-                        <h1 class="newsblock-title-under" style="/*font-family: Raleway, sans-serif;*/"><a href="{{ path('article_view', {id: article.id}) }}">{{article.title}}</a></h1>
-                        <p class="text-justify">{{ article.short}}...<a href="{{ path('article_view', {id: article.id}) }}"><span>&nbsp;Lire la suite&nbsp;<i class="fa fa-chevron-right" style="color: rgba(33,37,41,0.5);"></i></span></a><span style="color:grey; float: right; font-style:italic;"> - posté le: {{ article.datepost|date("d/m/Y") }} - </span></p>
+                    <div class="row article-row">
+                        <div class="col-12 col-sm-4 col-md-4 col-lg-3 col-article-img">
+                            <div class="img-thumbnail img-fluid img-container" style="">
+                                <div class="thumb" style="background-image: url('{{ asset(article.url) }}')" data-source="{{ asset(article.url) }}"></div>
+                            </div>
+                        </div>
+                        <div class="col-12 col-sm-8 col-md-8 col-lg-9 news-bg" style="padding: 15px 10px; ">
+                            <div class="row">
+                                <div class="col-12" >
+                                    <h1 class="newsblock-title-under" style="/*font-family: Raleway, sans-serif;*/">
+                                        <a href="{{ path('article_view', {id: article.id}) }}">{{article.title}}</a>
+                                    </h1>
+                                    <p class="text-justify">{{ article.short}}...<a href="{{ path('article_view', {id: article.id}) }}">
+                                            <span>&nbsp;Lire la suite&nbsp;<i class="fa fa-chevron-right" style="color: rgba(33,37,41,0.5);"></i>
+                                            </span>
+                                        </a>
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="row" style="height: 100%;">
+                                <div class="col-12">
+                                    <span style="color:grey; font-style:italic;position: absolute; right: 15px;">
+                                        - posté le:
+                                        {{ article.datepost|date("d/m/Y") }}
+                                        -
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                </div>
                 {% endfor %}
             </div>
-		</div>
+        </div>
     </article>
     <hr>
     <div style="padding-right: 50px; padding-left: 50px;">
@@ -92,83 +115,78 @@
                     </div>
                 </div>
                 <div class="row text-center text-lg-left" id="bestimage">
-                {% for  image in listImage %}
-                    <div class="col-12 col-sm-6 col-md-4 col-lg-3 col-xl-2"><div class="img-thumbnail img-fluid img-container" style="margin: 10px"><div class="thumb" style="background-image: url('{{ asset(image.url) }}')" data-source="{{ asset(image.url) }}"></div></div></div>
-                {% endfor %}
+                    {% for  image in listImage %}
+                        <div class="col-12 col-sm-6 col-md-4 col-lg-3 col-xl-2">
+                            <div class="img-thumbnail img-fluid img-container" style="margin: 10px">
+                                <div class="thumb" style="background-image: url('{{ asset(image.url) }}')" data-source="{{ asset(image.url) }}"></div>
+                            </div>
+                        </div>
+                    {% endfor %}
                 </div>
                 <div class="row">
-                    <div class="col" style="padding-left: 0px;padding-top: 10px;padding-bottom: 10px;"><a class="text-left" href="{{ path('gallery') }}" style="font-size: 15px;font-style: italic;">...Vers la galerie&nbsp;<i class="fa fa-chevron-right" style="color: rgba(33,37,41,0.5);font-size: 12px;"></i></a></div>
+                    <div class="col" style="padding-left: 0px;padding-top: 10px;padding-bottom: 10px;">
+                        <a class="text-left" href="{{ path('gallery') }}" style="font-size: 15px;font-style: italic;">...Vers la galerie&nbsp;<i class="fa fa-chevron-right" style="color: rgba(33,37,41,0.5);font-size: 12px;"></i>
+                        </a>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 {% endblock %}
-
 {% block script %}
-<script>
+    <script>
 
-mapboxgl.accessToken = 'pk.eyJ1IjoiZGF2ZWRnb3ViIiwiYSI6ImNrMDU4Z3hrdTAyNXkzbHRmMG9idm9wZHYifQ.m4PPqSkZJt31QdHuyz5weA';
+        mapboxgl.accessToken = 'pk.eyJ1IjoiZGF2ZWRnb3ViIiwiYSI6ImNrMDU4Z3hrdTAyNXkzbHRmMG9idm9wZHYifQ.m4PPqSkZJt31QdHuyz5weA';
 
-var map = new mapboxgl.Map({
-  container: 'map',
-  style: 'mapbox://styles/mapbox/streets-v11',
-  //center: [-96, 37.8],
-  zoom: 3
-});
-
-var geojson = {
-  type: 'FeatureCollection',
-  features: [
-  {% for article in listGPS %}
-      {
-    type: 'Feature',
-    geometry: {
-      type: 'Point',
-      coordinates: [ {{ article.gps}}]
-    },
-    properties: {
-      title: '{{ article.title }}',
-      description: '<a href="{{ path('article_view', {id: article.id}) }}">Lire L\'article</a>'
-    }
-  },
-  {% endfor %}
-  ]
-};
-
-var bounds = new mapboxgl.LngLatBounds();
- 
-geojson.features.forEach(function(marker) {
-
-  // create a HTML element for each feature
-  var el = document.createElement('div');
-  el.className = 'marker';
-
-  // make a marker for each feature and add to the map
-  new mapboxgl.Marker(el)   
-    .setLngLat(marker.geometry.coordinates)
-    .setPopup(new mapboxgl.Popup({ offset: 25 }) // add popups
-    .setHTML('<h6><strong>' + marker.properties.title + '<strong></h6><p style="font-size:11px">' + marker.properties.description + '</p>'))
-    .addTo(map);
-
-    bounds.extend(marker.geometry.coordinates);
-});
-
-map.fitBounds(bounds, { padding: 50 });
-
-
-</script>
-<script>
-$('article .img-container').height(($('article .thumb').width() / 16 * 8));
-$('#bestimage .img-container').height(($('#bestimage .thumb').width() / 16 * 8));
-    $('#bestimage .thumb').each(function ()
-    {
-        var currentImage = $(this);
-        currentImage.wrap("<a href='" + currentImage.attr("data-source") + "' data-toggle='lightbox' data-gallery='example-gallery' class='d-block mb-4 h-100'></a>");
-    });
-
-    $(document).on('click', '[data-toggle="lightbox"]', function(event) {
-            event.preventDefault();
-            $(this).ekkoLightbox();
+        var map = new mapboxgl.Map({
+            container: 'map', style: 'mapbox://styles/mapbox/streets-v11',
+            // center: [-96, 37.8],
+            zoom: 3
         });
-</script>
-{% endblock %}
+
+        var geojson = {
+            type: 'FeatureCollection',
+            features: [{% for article in listGPS %}{
+                        type: 'Feature',
+                        geometry: {
+                            type: 'Point',
+                            coordinates: [{{ article.gps }}]
+                        },
+                        properties: {
+                            title: '{{ article.title }}',
+                            description: '<a href="          {{ path('article_view', {id: article.id}) }}">Lire L\'article</a>'
+                        }
+                    },{% endfor %}]
+        };
+
+        var bounds = new mapboxgl.LngLatBounds();
+
+        geojson.features.forEach(function (marker) { // create a HTML element for each feature
+            var el = document.createElement('div');
+            el.className = 'marker';
+
+            // make a marker for each feature and add to the map
+            new mapboxgl.Marker(el)   
+                .setLngLat(marker.geometry.coordinates)
+                .setPopup(new mapboxgl.Popup({ offset: 25 }) // add popups
+                .setHTML('<h6><strong>' + marker.properties.title + '<strong></h6><p style="font-size:11px">' + marker.properties.description + '</p>'))
+                .addTo(map);
+            bounds.extend(marker.geometry.coordinates);
+        });
+
+        map.fitBounds(bounds, {padding: 50});
+        </script>
+        <script>
+            $('article .img-container').height(($('article .thumb').width() / 16 * 8));
+            $('#bestimage .img-container').height(($('#bestimage .thumb').width() / 16 * 8));
+            $('#bestimage .thumb').each(function () {
+                var currentImage = $(this);
+                currentImage.wrap("<a href='" + currentImage.attr("data-source") + "' data-toggle='lightbox' data-gallery='example-gallery' class='d-block mb-4 h-100'></a>");
+            });
+
+            $(document).on('click', '[data-toggle="lightbox"]', function (event) {
+                event.preventDefault();
+                $(this).ekkoLightbox();
+            });
+        </script>
+    {% endblock %}
