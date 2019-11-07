@@ -107,6 +107,11 @@ class GalleryController extends AbstractController
 			$request->getSession()->getFlashBag()->add('success', 'Album bien enregistrée.');
 			$album->setUrl(dirname($album->getUrlImg()));
 
+			if ($form->getClickedButton() && 'Publish' === $form->getClickedButton()->getName()) {
+				$request->getSession()->getFlashBag()->add('success', 'l\'album a bien été publié.');
+				$album->setStatus('published');
+			}
+
 			$em->persist($album);
 			$em->flush();
 			

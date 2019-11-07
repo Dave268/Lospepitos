@@ -27,7 +27,7 @@ class MenuController extends AbstractController
 		$em = $this->getDoctrine()->getManager();
 		$menu = new Navbar($em);
 		$filesystem = new Filesystem();
-		$filesystem->dumpFile(__DIR__ . '../../../templates/core/navbar.html.twig', $menu->setNavbar());
+		$filesystem->dumpFile(__DIR__ . '/../../templates/core/navbar.html.twig', $menu->setNavbar());
 
 			$application = new Application($kernel);
 			$application->setAutoExit(false);

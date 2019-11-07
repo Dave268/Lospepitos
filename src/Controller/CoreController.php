@@ -21,7 +21,9 @@ class CoreController extends AbstractController
 		$listGPS = $this->getDoctrine()
 		->getManager()
 		->getRepository(Article::class)
-		->findAll()
+		->findBy(
+			['status' => 'Published'],
+			['date_post' => 'DESC'])
 	  ;
 
 		$listImage = $this->getDoctrine()
