@@ -6,6 +6,15 @@
 
 
 {% block body %}
+<style>
+.thumb {
+            width: 100%;
+            height: 100%;
+            background-position: 50% 50%;
+            background-repeat: no-repeat;
+            background-size: cover;
+        }
+</style>
 <div class="row" style="padding-top: 10px;">
         <div class="col" style="padding-top: 0px;">
             <h1 class="text-center title-page" style="font-weight: 500;font-style: italic;font-family: 'Cedarville Cursive', cursive;color: rgb(0,29,58);">Gestion Articles</h1>
@@ -22,19 +31,21 @@
         <div class="container" style="width: 80%;max-width: 80%;padding-bottom: 50px;">
             
                 {% for article in listAlbum %}
-                <div class="row text-center text-lg-left">
-                    <div class="col-2"><img class="float-left article-img-admin" src="{{ asset(article.urlImg) }}"></div>
-                    <div class="col-6">
-                        <h1 class="newsblock-title-under-admin"><a href="{{ path('admin_gallery_view', {id: article.id})}}">{{ article.title }}</a></h1>
-                    </div>
-                    <div class="col-2">
-                        <h5 class="center">{{ article.status }}</h5>
-                    </div>
-                    <div class="col-2">
-                        <div class="actioncenter"><span class="icon"> <a class="subscribe" href="{{ path('admin_gallery_view', {id: article.id}) }}"><i class="fa fa-eye actionicon"></i></a>
+                <div class="row">
+                        <div class="col-4 col-sm-3 col-md-2 col-lg-2 col-article-img"><div class="img-thumbnail img-fluid img-container" style="">
+                                <div class="thumb" style="background-image: url('{{ asset(article.urlImg) }}')"></div>
+                            </div></div>
+                        <div class="col-6 news-bg" style="padding: 15px 10px;">
+                            <h1 class="newsblock-title-under"><a href="{{ path('admin_article_view', {id: article.id}) }}">{{ article.title }}</a></h1>
+                        </div>
+                        <div class="col-2">
+                            <h5 class="center">{{ article.status }}</h5>
+                        </div>
+                        <div class="col-2">
+                            <div class="actioncenter"><span class="icon"> <a class="subscribe" href="{{ path('admin_gallery_view', {id: article.id}) }}"><i class="fa fa-eye actionicon"></i></a>
                         <a class="flag" href="{{ path('admin_gallery_modify', {id: article.id}) }}">&nbsp;&nbsp;<i class="fa fa-pencil actionicon"></i></a>
                         <a class="flag" data-href="{{ path('admin_gallery_delete', {id: article.id}) }}" data-toggle="modal" data-target="#confirm-delete">&nbsp;&nbsp;<i class="fa fa-trash-o actionicon"></i></a></span></div>
-                    </div>
+                        </div>
                     </div>
                 {% endfor %}
             
@@ -45,13 +56,13 @@
                             <nav class="d-md-flex justify-content-md-center">
                             {%if nbPages > 0 %}
                                 <ul class="pagination">
-                                    <li class="page-item {% if page <= 1 %}disabled {% endif %}" ><a class="page-link" href="{{ path('articles', {'page': page-1}) }}" aria-label="Previous"><span aria-hidden="true">«</span></a></li>
+                                    <li class="page-item {% if page <= 1 %}disabled {% endif %}" ><a class="page-link" href="{{ path('admin_gallery', {'page': page-1}) }}" aria-label="Previous"><span aria-hidden="true">«</span></a></li>
                                     {% for p in range(1, nbPages) %}
                                         <li class="page-item {% if p == page %}active{% endif %}">
-                                            <a class="page-link" href="{{ path('articles', {'page': p}) }}">{{ p }}</a>
+                                            <a class="page-link" href="{{ path('admin_gallery', {'page': p}) }}">{{ p }}</a>
                                         </li>
                                         {% endfor %}
-                                    <li class="page-item {% if page >= nbPages %}disabled {% endif %}"><a class="page-link" href="{{ path('articles', {'page': page+1}) }}" aria-label="Next"><span aria-hidden="true">»</span></a></li>
+                                    <li class="page-item {% if page >= nbPages %}disabled {% endif %}"><a class="page-link" href="{{ path('admin_gallery', {'page': page+1}) }}" aria-label="Next"><span aria-hidden="true">»</span></a></li>
                                 </ul>
                                 {% endif %}
                             </nav>
@@ -63,4 +74,8 @@
     </div>
 {% endblock %}
 
-{% block script %}{% endblock %}
+{% block script %}
+<script>
+$('.img-container').height(($('.thumb').width() / 16 * 8));
+
+</script>{% endblock %}

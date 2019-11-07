@@ -1,6 +1,6 @@
 {# pages/articles/articles.html.twig #}
 
-{% extends "core/layoutadmin.html.twig" %}
+{% extends "core/layout.html.twig" %}
 
 {% block title %}
     {{ parent() }} - Articles
@@ -10,6 +10,15 @@
 
 
 {% block body %}
+<style>
+.thumb {
+            width: 100%;
+            height: 100%;
+            background-position: 50% 50%;
+            background-repeat: no-repeat;
+            background-size: cover;
+        }
+</style>
 <div class="row" style="padding-top: 10px;">
         <div class="col" style="padding-top: 0px;">
             <h1 class="text-center title-page" style="font-weight: 500;font-style: italic;font-family: 'Cedarville Cursive', cursive;color: rgb(0,29,58);">Gestion Articles</h1>
@@ -29,9 +38,11 @@
                 
 			{% for  article in listArticles %}
                     <div class="row">
-                        <div class="col-4 col-sm-3 col-md-2 col-lg-2 col-article-img"><img class="float-left article-img" style="max-height:150px;" src="{{ asset(article.url) }}"></div>
+                        <div class="col-4 col-sm-3 col-md-2 col-lg-2 col-article-img"><div class="img-thumbnail img-fluid img-container" style="">
+                                <div class="thumb" style="background-image: url('{{ asset(article.url) }}')" data-source="{{ asset(article.url) }}"></div>
+                            </div></div>
                         <div class="col-6 news-bg" style="padding: 15px 10px;">
-                            <h1 class="newsblock-title-under-admin"><a href="{{ path('admin_article_view', {id: article.id}) }}">{{ article.title }}<a></h1>
+                            <h1 class="newsblock-title-under"><a href="{{ path('admin_article_view', {id: article.id}) }}">{{ article.title }}<a></h1>
                             <p class="paragraph-admin">{{article.Short }}&nbsp;<a href="{{ path('admin_article_view', {id: article.id}) }}"><span>Lire la suite&nbsp;<i class="fa fa-chevron-right" style="color: rgba(33,37,41,0.5);"></i></span></a><span style="color:grey; float: right; font-style:italic;"> - posté le: {{ article.datepost|date("d/m/Y") }} - </span></p>
                         </div>
                         <div class="col-2">
@@ -66,4 +77,8 @@
     </div>
 {% endblock %}
 
-{% block script %}{% endblock %}
+{% block script %}
+<script>
+$('.img-container').height(($('.thumb').width() / 16 * 8));
+
+</script>{% endblock %}

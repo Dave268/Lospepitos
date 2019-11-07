@@ -8,6 +8,15 @@
     {{ parent() }} - Gallerie D'images
 {% endblock %}
 {% block body %}
+<style>
+.thumb {
+            width: 100%;
+            height: 100%;
+            background-position: 50% 50%;
+            background-repeat: no-repeat;
+            background-size: cover;
+        }
+</style>
 
 <div class="row" style="padding-top: 60px;">
         <div class="col" style="padding-top: 0px;">
@@ -30,7 +39,7 @@
     <div class="row text-center text-lg-left">
     {% for article in listAlbum %}
         <div class="col-12 col-sm-6 col-md-3 col-lg-2" style="padding: 15px;">
-            <div class="gallery" style="margin: 0px;width: 100%;"><a href="{{ path('gallery_view', {id: article.id})}}"><div class="thumb" style="background-image: url('{{ asset(article.urlImg) }}')"></div>
+            <div class="gallery" style="margin: 0px; width: 100%; height: 100%;border-radius: 5px;"><a href="{{ path('gallery_view', {id: article.id})}}"><div class="img-fluid img-container" style=""><div class="thumb" style="background-image: url('{{ asset(article.urlImg) }}')"></div></div>
                 <div class="desc"><span>{{ article.title }}</span></div>
                 </a>
             </div>
