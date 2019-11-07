@@ -18,9 +18,37 @@ use App\Form\ArticleCategoryType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Filesystem\Filesystem;
 use App\Service\Navbar;
+use Symfony\Component\HttpKernel\KernelInterface;
+use Symfony\Bundle\FrameworkBundle\Console\Application;
+use Symfony\Component\Console\Input\ArrayInput;
+use Symfony\Component\Console\Output\NullOutput;
+
 
 class ArticlesController extends AbstractController
 {
+	private function clearUpdate(KernelInterface $kernel){
+		$em = $this->getDoctrine()->getManager();
+		$menu = new Navbar($em);
+		$filesystem = new Filesystem();
+		$filesystem->dumpFile(__DIR__ . '../../../templates/core/navbar.html.twig', $menu->setNavbar());
+
+			$application = new Application($kernel);
+			$application->setAutoExit(false);
+	
+			$input = new ArrayInput([
+				'command' => 'cache:clear',
+				'--env' => 'prod',
+				'--no-warmup' => true,
+			]);
+	
+			// You can use NullOutput() if you don't need the output
+			$application->run($input, new NullOutput());
+
+	
+			// return new Response(""), if you used NullOutput()
+			return new Response("");
+	}
+
     public function articles($category, $type, $sub, $page)
     {
 		$nbPerPage = 10;
@@ -97,7 +125,7 @@ class ArticlesController extends AbstractController
 		'article' => $article));
     }
 	
-	public function add(Request $request)
+	public function add(Request $request, KernelInterface $kernel)
     {
 		$article = New Article();
 
@@ -114,15 +142,12 @@ class ArticlesController extends AbstractController
 		$em->persist($article);
 		$em->flush();
 
-		//on met à jour la barre de navigation
-		$menu = new Navbar($em);
-		$filesystem = new Filesystem();
-		$filesystem->dumpFile(__DIR__ . '../../../templates/core/navbar.html.twig', $menu->setNavbar());
-
+		//update navbar + clear cache
+		$this->clearUpdate($kernel);
 		return $this->redirectToRoute('admin_articles_modify', array('id' => $article->getId()));
     }
 	
-	public function modify($id, Request $request)
+	public function modify($id, Request $request, KernelInterface $kernel)
     {
 		$article = $this->getDoctrine()->getManager()->getRepository(Article::class)->find($id);
 		$form = $this->get('form.factory')->create(ArticleType::class, $article, [
@@ -156,10 +181,8 @@ class ArticlesController extends AbstractController
 			$em->persist($article);
 			$em->flush();
 
-			//on met à jour la barre de navigation
-            $menu = new Navbar($em);
-			$filesystem = new Filesystem();
-			$filesystem->dumpFile(__DIR__ . '../../../templates/core/navbar.html.twig', $menu->setNavbar());
+			//update navbar + clear cache
+			$this->clearUpdate($kernel);
 
 			if($request->isXmlHttpRequest())
 				{
@@ -182,18 +205,16 @@ class ArticlesController extends AbstractController
     ));
     }
 	
-	public function delete($id, Request $request)
+	public function delete($id, Request $request, KernelInterface $kernel)
     {
 		$article = $this->getDoctrine()->getManager()->getRepository(Article::class)->find($id);
 		$em = $this->getDoctrine()->getManager();
 		$em->remove($article);
 		$em->flush();
 
-		//on met à jour la barre de navigation
-		$menu = new Navbar($em);
-		$filesystem = new Filesystem();
-		$filesystem->dumpFile(__DIR__ . '../../../templates/core/navbar.html.twig', $menu->setNavbar());
-		
+		//update navbar + clear cache
+			$this->clearUpdate($kernel);
+
 		$request->getSession()->getFlashBag()->add('success', 'L\'article est bien supprimé.');
 
 

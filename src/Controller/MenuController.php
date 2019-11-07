@@ -16,9 +16,36 @@ use App\Form\ArticleCategoryType;
 use App\Form\SubCategoryType;
 use Symfony\Component\Filesystem\Filesystem;
 use App\Service\Navbar;
+use Symfony\Component\HttpKernel\KernelInterface;
+use Symfony\Bundle\FrameworkBundle\Console\Application;
+use Symfony\Component\Console\Input\ArrayInput;
+use Symfony\Component\Console\Output\NullOutput;
 
 class MenuController extends AbstractController
 {
+	private function clearUpdate(KernelInterface $kernel){
+		$em = $this->getDoctrine()->getManager();
+		$menu = new Navbar($em);
+		$filesystem = new Filesystem();
+		$filesystem->dumpFile(__DIR__ . '../../../templates/core/navbar.html.twig', $menu->setNavbar());
+
+			$application = new Application($kernel);
+			$application->setAutoExit(false);
+	
+			$input = new ArrayInput([
+				'command' => 'cache:clear',
+				'--env' => 'prod',
+				'--no-warmup' => true,
+			]);
+	
+			// You can use NullOutput() if you don't need the output
+			$application->run($input, new NullOutput());
+
+	
+			// return new Response(""), if you used NullOutput()
+			return new Response("");
+	}
+
     public function adminMenu()
     {
         $listCategory = $this->getDoctrine()
@@ -53,7 +80,7 @@ class MenuController extends AbstractController
         ));
     }
 
-    public function addContinent(Request $request)
+    public function addContinent(Request $request, KernelInterface $kernel)
     {
 		$continent = New Continent();
 		$form = $this->createForm(ContinentType::class, $continent, [
@@ -70,10 +97,9 @@ class MenuController extends AbstractController
 			
 			$em->persist($continent);
             $em->flush();
-            
-            $menu = new Navbar($em);
-			$filesystem = new Filesystem();
-			$filesystem->dumpFile(__DIR__ . '../../../templates/core/navbar.html.twig', $menu->setNavbar());
+			
+			//update navbar + clear cache
+			$this->clearUpdate($kernel);
 
 			if($request->isXmlHttpRequest())
                     {
@@ -99,24 +125,22 @@ class MenuController extends AbstractController
     ));
 	}
 	
-	public function deleteContinent($id, Request $request)
+	public function deleteContinent($id, Request $request, KernelInterface $kernel)
     {
 		$continent = $this->getDoctrine()->getManager()->getRepository(Continent::class)->find($id);
 		$em = $this->getDoctrine()->getManager();
 		$em->remove($continent);
         $em->flush();
         
-        $menu = new Navbar($em);
-			$filesystem = new Filesystem();
-			$filesystem->dumpFile(__DIR__ . '../../../templates/core/navbar.html.twig', $menu->setNavbar());
-
+        //update navbar + clear cache
+			$this->clearUpdate($kernel);
 		$request->getSession()->getFlashBag()->add('success', 'Le continent est bien supprimé.');
 
 		
 		return $this->redirectToRoute('admin_menu');
 	}
 
-    public function modifyContinent($id, Request $request)
+    public function modifyContinent($id, Request $request, KernelInterface $kernel)
     {
 		$category = $this->getDoctrine()
         ->getManager()
@@ -134,11 +158,8 @@ class MenuController extends AbstractController
 			$em->persist($category);
 			$em->flush();
             
-            //on met à jour la barre de navigation
-            $menu = new Navbar($em);
-			$filesystem = new Filesystem();
-			$filesystem->dumpFile(__DIR__ . '../../../templates/core/navbar.html.twig', $menu->setNavbar());
-
+            //update navbar + clear cache
+			$this->clearUpdate($kernel);
 				$request->getSession()->getFlashBag()->add('success', 'Le Continent est bien modifié.');
 
 			return $this->redirectToRoute('admin_menu');
@@ -149,7 +170,7 @@ class MenuController extends AbstractController
     ));
 	}
 
-	public function addCountry(Request $request)
+	public function addCountry(Request $request, KernelInterface $kernel)
     {
 		$country = New Country();
 		$form = $this->createForm(CountryType::class, $country, [
@@ -165,10 +186,9 @@ class MenuController extends AbstractController
 			
 			$em->persist($country);
             $em->flush();
-            $menu = new Navbar($em);
-			$filesystem = new Filesystem();
-            $filesystem->dumpFile(__DIR__ . '../../../templates/core/navbar.html.twig', $menu->setNavbar());
-            
+            //update navbar + clear cache
+			$this->clearUpdate($kernel);
+
 			if($request->isXmlHttpRequest())
                     {
                         $json = json_encode(array(
@@ -193,7 +213,7 @@ class MenuController extends AbstractController
     ));
 	}
 
-    public function modifyCountry($id, Request $request)
+    public function modifyCountry($id, Request $request, KernelInterface $kernel)
     {
 		$category = $this->getDoctrine()
         ->getManager()
@@ -211,10 +231,8 @@ class MenuController extends AbstractController
 			$em->persist($category);
 			$em->flush();
             
-            //on met à jour la barre de navigation
-            $menu = new Navbar($em);
-			$filesystem = new Filesystem();
-			$filesystem->dumpFile(__DIR__ . '../../../templates/core/navbar.html.twig', $menu->setNavbar());
+            //update navbar + clear cache
+			$this->clearUpdate($kernel);
 
 				$request->getSession()->getFlashBag()->add('success', 'Le pays est bien modifié.');
 
@@ -226,25 +244,22 @@ class MenuController extends AbstractController
     ));
 	}
 	
-	public function deleteCountry($id, Request $request)
+	public function deleteCountry($id, Request $request, KernelInterface $kernel)
     {
 		$country = $this->getDoctrine()->getManager()->getRepository(Country::class)->find($id);
 		$em = $this->getDoctrine()->getManager();
 		$em->remove($country);
 		$em->flush();
 
-        //on met à jour la barre de navigation
-        $menu = new Navbar($em);
-        $filesystem = new Filesystem();
-        $filesystem->dumpFile(__DIR__ . '../../../templates/core/navbar.html.twig', $menu->setNavbar());
-
+        //update navbar + clear cache
+			$this->clearUpdate($kernel);
 		$request->getSession()->getFlashBag()->add('success', 'Le pays est bien supprimé.');
 
 		
 		return $this->redirectToRoute('admin_menu');
 	}
 
-	public function addCategory(Request $request)
+	public function addCategory(Request $request, KernelInterface $kernel)
     {
 		$category = New ArticleCategory();
 		$form = $this->createForm(ArticleCategoryType::class, $category, [
@@ -259,10 +274,8 @@ class MenuController extends AbstractController
 			$em->persist($category);
 			$em->flush();
             
-            //on met à jour la barre de navigation
-            $menu = new Navbar($em);
-			$filesystem = new Filesystem();
-			$filesystem->dumpFile(__DIR__ . '../../../templates/core/navbar.html.twig', $menu->setNavbar());
+            //update navbar + clear cache
+			$this->clearUpdate($kernel);
 
 			if($request->isXmlHttpRequest())
                     {
@@ -288,7 +301,7 @@ class MenuController extends AbstractController
     ));
     }
     
-    public function modifyCategory($id, Request $request)
+    public function modifyCategory($id, Request $request, KernelInterface $kernel)
     {
 		$category = $this->getDoctrine()
         ->getManager()
@@ -306,11 +319,9 @@ class MenuController extends AbstractController
 			$em->persist($category);
 			$em->flush();
             
-            //on met à jour la barre de navigation
-            $menu = new Navbar($em);
-			$filesystem = new Filesystem();
-			$filesystem->dumpFile(__DIR__ . '../../../templates/core/navbar.html.twig', $menu->setNavbar());
-
+            //update navbar + clear cache
+			$this->clearUpdate($kernel);
+			
 				$request->getSession()->getFlashBag()->add('success', 'La catégorie est bien modifié.');
 
 			return $this->redirectToRoute('admin_menu');
@@ -321,17 +332,15 @@ class MenuController extends AbstractController
     ));
 	}
 	
-	public function deleteCategory($id, Request $request)
+	public function deleteCategory($id, Request $request, KernelInterface $kernel)
     {
 		$category = $this->getDoctrine()->getManager()->getRepository(ArticleCategory::class)->find($id);
 		$em = $this->getDoctrine()->getManager();
 		$em->remove($category);
 		$em->flush();
 
-		//on met à jour la barre de navigation
-            $menu = new Navbar($em);
-			$filesystem = new Filesystem();
-			$filesystem->dumpFile(__DIR__ . '../../../templates/core/navbar.html.twig', $menu->setNavbar());
+		//update navbar + clear cache
+		$this->clearUpdate($kernel);
 
 		$request->getSession()->getFlashBag()->add('success', 'La catégorie est bien supprimée.');
 
@@ -339,7 +348,7 @@ class MenuController extends AbstractController
 		return $this->redirectToRoute('admin_menu');
 	}
 
-    public function addSubcategory(Request $request)
+    public function addSubcategory(Request $request, KernelInterface $kernel)
     {
 		$category = New SubCategory();
 		$form = $this->createForm(SubCategoryType::class, $category, [
@@ -354,10 +363,8 @@ class MenuController extends AbstractController
 			$em->persist($category);
             $em->flush();
             
-            //on met à jour la barre de navigation
-            $menu = new Navbar($em);
-			$filesystem = new Filesystem();
-			$filesystem->dumpFile(__DIR__ . '../../../templates/core/navbar.html.twig', $menu->setNavbar());
+            //update navbar + clear cache
+			$this->clearUpdate($kernel);
 
 			if($request->isXmlHttpRequest())
             {
@@ -383,7 +390,7 @@ class MenuController extends AbstractController
     ));
 	}
 
-    public function modifySubCategory($id, Request $request)
+    public function modifySubCategory($id, Request $request, KernelInterface $kernel)
     {
 		$category = $this->getDoctrine()
         ->getManager()
@@ -401,10 +408,8 @@ class MenuController extends AbstractController
 			$em->persist($category);
 			$em->flush();
             
-            //on met à jour la barre de navigation
-            $menu = new Navbar($em);
-			$filesystem = new Filesystem();
-			$filesystem->dumpFile(__DIR__ . '../../../templates/core/navbar.html.twig', $menu->setNavbar());
+            //update navbar + clear cache
+			$this->clearUpdate($kernel);
 
 				$request->getSession()->getFlashBag()->add('success', 'La sous-catégorie est bien modifié.');
 
@@ -416,17 +421,15 @@ class MenuController extends AbstractController
     ));
 	}
 	
-	public function deleteSubcategory($id, Request $request)
+	public function deleteSubcategory($id, Request $request, KernelInterface $kernel)
     {
 		$category = $this->getDoctrine()->getManager()->getRepository(SubCategory::class)->find($id);
 		$em = $this->getDoctrine()->getManager();
 		$em->remove($category);
 		$em->flush();
 
-		//on met à jour la barre de navigation
-        $menu = new Navbar($em);
-        $filesystem = new Filesystem();
-        $filesystem->dumpFile(__DIR__ . '../../../templates/core/navbar.html.twig', $menu->setNavbar());
+		//update navbar + clear cache
+			$this->clearUpdate($kernel);
 
 		$request->getSession()->getFlashBag()->add('success', 'La catégorie est bien supprimée.');
 

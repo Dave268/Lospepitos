@@ -15,7 +15,7 @@
             background-size: cover;
         }
 </style>
-<div class="row" style="padding-top: 10px;">
+<div class="row" style="padding-top: 70px;">
     <div class="col" style="padding-top: 0px;">
         <h1 class="text-center title-page" style="font-weight: 500;font-style: italic;font-family: 'Cedarville Cursive', cursive;color: rgb(0,29,58);">Gestion Articles</h1>
         <hr style="margin-top: 25px;">
@@ -23,6 +23,7 @@
 </div>
 <div class="container" style="width: 95%;max-width: 100%;">
     <div class="row">
+    <div class="col-md-2 col-lg-2 sticky-top"><a href="{{ path('admin')}}"><h4><i class="fas fa-arrow-left"></i> Retour à la liste</h4></a></div>
         <div class="col" style="padding-bottom: 30px; padding-top:50px;">
             <button onclick="window.location.href='{{ path('admin_bestimage_add') }}'" class="btn btn-light btn-lg addbutton" type="button" style="font-size: 20px;"><i class="fa fa-plus" style="font-size: 20px;"></i>&nbsp;Ajouter une image</button></div>
     </div>
