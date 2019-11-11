@@ -27,7 +27,7 @@ class ArticleType extends AbstractType
         $builder
             ->add('title', 		        TextType::class)
             ->add('categories',         EntityType::class, ['class' => ArticleCategory::class,'choice_label' => 'name', 'multiple' => true])
-            ->add('subcategories',         EntityType::class, ['class' => SubCategory::class,'choice_label' => 'name', 'multiple' => true])
+            ->add('subcategories',      EntityType::class, ['class' => SubCategory::class,'choice_label' => 'name', 'multiple' => true])
             ->add('date_post', 	        DateType::class, ['widget' => 'single_text', 'attr' => ['type' => 'date']])
             ->add('url',                ElFinderType::class, ['instance' => 'form', 'enable' => true, 'attr' => ['class' => 'form-control']])
             ->add('Country',            EntityType::class, ['class' => Country::class, 'choice_label' => 'name',])

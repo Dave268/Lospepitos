@@ -56,7 +56,8 @@ class GalleryController extends AbstractController
 		
         return $this->render('pages/gallery/view.html.twig', array(
 		'album' => $return,
-		'title' => $album->getTitle()));
+		'title' => $album->getTitle(),
+		'entity' => $album));
     }
 	
 	public function adminGallery($page)
@@ -89,7 +90,7 @@ class GalleryController extends AbstractController
 				$return[] = $url . "/" . $file->getRelativePathname();
 			}
 		
-        return $this->render('pages/gallery/adminView.html.twig', array(
+        return $this->render('pages/gallery/view.html.twig', array(
 		'album' => $return,
 		'title' => $album->getTitle()));
     }
@@ -105,7 +106,7 @@ class GalleryController extends AbstractController
 			$em = $this->getDoctrine()->getManager();
 			
 			$request->getSession()->getFlashBag()->add('success', 'Album bien enregistrée.');
-			$album->setUrl(dirname($album->getUrlImg()));
+			$album->setUrl(dirname(rawurldecode($album->getUrlImg())));
 
 			if ($form->getClickedButton() && 'Publish' === $form->getClickedButton()->getName()) {
 				$request->getSession()->getFlashBag()->add('success', 'l\'album a bien été publié.');

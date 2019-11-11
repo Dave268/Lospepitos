@@ -6,7 +6,13 @@
     {{ parent() }} - {{ article.title }}
 {% endblock %}
 
-{% block head %}{% endblock %}
+{% block head %}
+<meta property="og:url"                content="http://www.lospepitos.org/articles/view/{{ article.id }}"/>
+<meta property="og:type"               content="article" />
+<meta property="og:title"              content="{{ article.title}}" />
+<meta property="og:description"        content="{{ article.short}}" />
+<meta property="og:image"              content="{{ article.url }}" />
+{% endblock %}
 
 {% block body %}
 <style>
@@ -16,8 +22,15 @@ td {
     padding-right: 30px;
     padding-top: 25px;
 }
+.thumb {
+            width: 100%;
+            height: 100%;
+            background-position: 50% 50%;
+            background-repeat: no-repeat;
+            background-size: cover;
+        }
 </style>
-<div class="row" style="padding: 30px; padding-top: 100px;">
+<div class="row" style="padding: 30px; padding-top: 120px;">
         <div class="col" style="padding-top: 0px;">
             <h1 class="text-center title-page" style="font-weight: 500;font-style: italic;font-family: 'Cedarville Cursive', cursive;color: rgb(0,29,58);">{{ article.title }}</h1>
             <hr style="margin-top: 25px;">
@@ -37,9 +50,21 @@ td {
         $('article img').each(function ()
         {
             var currentImage = $(this);
-            currentImage.css({"margin":"10px"});
-            currentImage.wrap("<a href='" + currentImage.attr("src") + "' data-toggle='lightbox'  data-gallery='example-gallery' ></a>");
+            currentImage.parent().addClass("row justify-content-around");
+            currentImage.replaceWith('<div class="col-12 col-md-6 col-article-img show" style="padding:10px;box-sizing: border-box;"><a  href="' + currentImage.attr("src") + '" data-toggle="lightbox"  data-gallery="example-gallery" ><div class="img-thumbnail img-fluid img-container" style=""><div class="thumb" style="background-image: url(' + currentImage.attr("src") + ')" data-source="{{ asset(article.url) }}"></div></div></a></div>');
         });
+        $('figure').each(function ()
+        {
+            var currentFig = $(this);
+            var currentCap = $(this).find('figcaption');
+            var currentImage = $(this).find('.show');
+            currentImage.append('<figcaption class="figure-caption text-center">' + currentCap.text() + '</figcaption>');
+            currentFig.replaceWith('<figure  class="figure col-12 col-md-6 col-article-img"><div class="">' + currentImage.html() + '</div></figure>');
+        });
+        $('.img-container').height(($('.thumb').width() / 16 * 8));
+        $( window ).on( "orientationchange", function( event ) {
+                $('.img-container').height(($('.thumb').width() / 16 * 8));
+            });
         $(document).on('click', '[data-toggle="lightbox"]', function(event) {
                 event.preventDefault();
                 $(this).ekkoLightbox();
