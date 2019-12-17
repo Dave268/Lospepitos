@@ -12,7 +12,7 @@ class ImageController extends AbstractController
 {
     public function adminImage($page)
     {
-		$nbPerPage = 10;
+		$nbPerPage = 18;
 
 		$listAlbum = $this->getDoctrine()
 		  ->getManager()

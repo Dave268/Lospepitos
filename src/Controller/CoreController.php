@@ -15,7 +15,7 @@ class CoreController extends AbstractController
 		$listArticles = $this->getDoctrine()
 		  ->getManager()
 		  ->getRepository(Article::class)
-		  ->getPublishedArticles(1, 5, "all")
+		  ->getPublishedArticles(1, 4, "all")
 		;
 
 		$listGPS = $this->getDoctrine()

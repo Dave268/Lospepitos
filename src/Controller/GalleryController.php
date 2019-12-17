@@ -47,7 +47,7 @@ class GalleryController extends AbstractController
     {
 		$album = $this->getDoctrine()->getManager()->getRepository(Album::class)->find($id);
 		$finder = new Finder();
-		$finder->files()->in(__DIR__ . "/../../public" . $album->getUrl());
+		$finder->files()->in(__DIR__ . "/../../public" . $album->getUrl())->sortByChangedTime();
 		$return = [];
 		$url = $album->getUrl();
 			foreach ($finder as $file) {
@@ -138,6 +138,8 @@ class GalleryController extends AbstractController
 		
 		if ($request->isMethod('POST') && $form->handleRequest($request)->isValid()) {
 			$em = $this->getDoctrine()->getManager();
+
+			$album->setUrl(dirname(rawurldecode($album->getUrlImg())));
 			
 
 			$request->getSession()->getFlashBag()->add('notice', 'Album bien modifié.');
