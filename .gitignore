@@ -5,7 +5,7 @@
 /.env.*.local
 /.env
 /public/bundles/
-/public/ckeditor
+/public/tinymce
 /var/
 /vendor/
 ###< symfony/framework-bundle ###

@@ -242,7 +242,8 @@ admin_subcategory_delete:
     controller: App\Controller\MenuController::deleteSubcategory
     requirements:
         id: '\d+'
-        
-filemanager:
-    path: /admin/filemanager
-    controller: App\Controller\FlmngrController::index
+
+artgris_bundle_file_manager:
+    resource: "@ArtgrisFileManagerBundle/Controller"
+    type:     annotation
+    prefix:   /manager

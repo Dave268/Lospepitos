@@ -16,6 +16,6 @@ return [
     Symfony\Bundle\WebServerBundle\WebServerBundle::class => ['dev' => true],
     FOS\UserBundle\FOSUserBundle::class => ['all' => true],
     Doctrine\Bundle\FixturesBundle\DoctrineFixturesBundle::class => ['dev' => true, 'test' => true],
-    CKSource\Bundle\CKFinderBundle\CKSourceCKFinderBundle::class => ['all' => true],
     FM\ElfinderBundle\FMElfinderBundle::class => ['all' => true],
+    Artgris\Bundle\FileManagerBundle\ArtgrisFileManagerBundle::class => ['all' => true],
 ];

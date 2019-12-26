@@ -1,0 +1,18 @@
+framework:
+    translator: { fallbacks: [ "en" ] }
+
+artgris_file_manager:
+    web_dir: public                 # set your public Directory (not required, default value: web)
+    conf:
+        default:
+            dir: "../public/test/full"
+            view: 'thumbnail'
+            upload:
+                image_library: 3
+                image_versions: {'../versions/large': {max_width: 1500, max_height: 1500}, '../versions/small': {max_width: 300, max_height: 300}, '../versions/thumbnail' : {max_width: 100, max_height: 100}}
+
+        tiny:
+            dir: "../public/test/tiny"
+            upload:
+                image_library: 3
+                image_versions: {'../versions/large': {max_width: 1500, max_height: 1500}, '../versions/small': {max_width: 300, max_height: 300}, '../versions/thumbnail' : {max_width: 100, max_height: 100}}
