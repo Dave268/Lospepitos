@@ -247,3 +247,11 @@ artgris_bundle_file_manager:
     resource: "@ArtgrisFileManagerBundle/Controller"
     type:     annotation
     prefix:   /manager
+
+ckfinder_connector:
+    resource: "@CKSourceCKFinderBundle/Resources/config/routing.yml"
+    prefix:   /
+
+artgris_media:
+     resource: "@ArtgrisMediaBundle/Resources/config/routing.yml"
+     prefix: /admin

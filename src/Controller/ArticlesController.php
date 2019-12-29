@@ -167,7 +167,7 @@ class ArticlesController extends AbstractController
 			$em = $this->getDoctrine()->getManager();
 			
 
-			$request->getSession()->getFlashBag()->add('notice', 'Article bien modifié.');
+			
 			if ($form->getClickedButton() && 'Publish' === $form->getClickedButton()->getName()) {
 					$request->getSession()->getFlashBag()->add('success', 'l\'article a bien été publié.');
 					$article->setStatus('published');
@@ -182,7 +182,7 @@ class ArticlesController extends AbstractController
 			$em->flush();
 
 			//update navbar + clear cache
-			$this->clearUpdate($kernel);
+			
 
 			if($request->isXmlHttpRequest())
 				{
@@ -195,6 +195,8 @@ class ArticlesController extends AbstractController
 
 					return $response;
 				}
+				$request->getSession()->getFlashBag()->add('notice', 'Article bien modifié.');
+				$this->clearUpdate($kernel);
 
 			return $this->redirectToRoute('admin_articles');
 		}

@@ -18,4 +18,7 @@ return [
     Doctrine\Bundle\FixturesBundle\DoctrineFixturesBundle::class => ['dev' => true, 'test' => true],
     FM\ElfinderBundle\FMElfinderBundle::class => ['all' => true],
     Artgris\Bundle\FileManagerBundle\ArtgrisFileManagerBundle::class => ['all' => true],
+    CKSource\Bundle\CKFinderBundle\CKSourceCKFinderBundle::class => ['all' => true],
+    Gregwar\ImageBundle\GregwarImageBundle::class => ['all' => true],
+    Artgris\Bundle\MediaBundle\ArtgrisMediaBundle::class => ['all' => true],
 ];

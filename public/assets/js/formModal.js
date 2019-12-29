@@ -41,7 +41,7 @@ var $envoi = true;
             $envoi = false;
             var $form = $("#form_envoi");
             //var path= "/admin/article/update/" + $("#form_envoi").attr("data-id") + "/" + "Text" + "/" + CKEDITOR.instances.article_text.getData();
-            CKEDITOR.instances.article_text.updateElement();
+            //CKEDITOR.instances.article_text.updateElement();
             $.ajax({
                 url: $("#form_envoi").attr("action"),
                 data: $("#form_envoi").serialize() ,
@@ -60,9 +60,13 @@ var $envoi = true;
         };
     };
 
-    CKEDITOR.instances.article_text.on('change', function(){
-        updateArticle();
-    });
+    function updateCardIfDirty() {
+        if (tinymce.activeEditor.isDirty()) {
+            updateArticle();
+        }
+    }
+      
+    setInterval(updateCardIfDirty, 2000);
     $("#form_envoi").on('change', function(){
         updateArticle();
     });
