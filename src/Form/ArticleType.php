@@ -11,6 +11,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\Extension\Core\Type\ButtonType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\DateType ;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
@@ -29,7 +30,12 @@ class ArticleType extends AbstractType
             ->add('categories',         EntityType::class, ['class' => ArticleCategory::class,'choice_label' => 'name', 'multiple' => true])
             ->add('subcategories',      EntityType::class, ['class' => SubCategory::class,'choice_label' => 'name', 'multiple' => true])
             ->add('date_post', 	        DateType::class, ['widget' => 'single_text', 'attr' => ['type' => 'date']])
-            ->add('url',                ElFinderType::class, ['instance' => 'form', 'enable' => true, 'attr' => ['class' => 'form-control']])
+            //->add('url',                ElFinderType::class, ['instance' => 'form', 'enable' => true, 'attr' => ['class' => 'form-control']])
+            ->add('url',                TextType::class)
+            ->add('browse', ButtonType::class, [
+                'label'=> 'browse',
+                'attr' => ['class' => 'btn btn-primary btn-sm', 'data-toggle' => 'modal', 'data-target'=>'#flmngrmodal'],
+            ])
             ->add('Country',            EntityType::class, ['class' => Country::class, 'choice_label' => 'name',])
             ->add('gps', 		        TextType::class, ['attr' => ['data-toggle' => 'modal', 'data-target'=> '#mapmodal']])
             ->add('short',		        TextareaType::class)

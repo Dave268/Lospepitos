@@ -50,6 +50,11 @@ background: #fff;
                     <a class="btn btn-success addForm" type="button" data-type="Nouvelle catégorie" href="{{ path('admin_articles_category_add') }}"><i class="glyphicon glyphicon-plus"></i>Ajouter une categorie</a>
                     <a class="btn btn-success addForm" type="button" data-type="Nouveau Continent" href="{{ path('admin_articles_continent_add') }}"><i class="glyphicon glyphicon-plus"></i>Ajouter un Continent</a>
                     <a class="btn btn-success addForm" type="button" data-type="Nouveau Pays" href="{{ path('admin_articles_country_add') }}"><i class="glyphicon glyphicon-plus"></i>Ajouter un Pays</a>
+                    <div class="row">
+                        <div class="col-xs-6 col-md-3">
+                            <img src="" class="img-responsive" id="image" alt="">
+                        </div>
+                    </div>
                     <div style="padding-top: 20px;">
                         {{ form(form, {'attr': {'id': 'form_envoi', 'data-id': articleID}}) }}
                     </div>
@@ -96,7 +101,25 @@ background: #fff;
             </div>
         </div>
     </div>
-
+ <!-- Modal -->
+    <div class="modal  fade" id="flmngrmodal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                <h4 class="modal-title" id="myModalLabel">File Manager</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                                aria-hidden="true">&times;</span></button>
+                </div>
+                <div class="modal-body">
+                    <iframe id="myframe" src="{{ path('file_manager', {module:1, conf:'default'}) }}" width="100%" height="500"
+                            frameborder="0"></iframe>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
 
 {% endblock %}
 
@@ -106,6 +129,14 @@ background: #fff;
     
 
 <script>
+$('#myframe').on('load', function () {
+    $(this).contents().on('click','.select',function () {
+        var path = $(this).attr('data-path')
+        $('#article_url').val(path);
+        $('#image').attr('src', path)
+        $('#flmngrmodal').modal('hide')
+    });
+});
         function myFileBrowser(callback, value, meta) {
 
             var type = meta.filetype;
